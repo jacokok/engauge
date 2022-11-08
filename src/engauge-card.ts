@@ -1,19 +1,19 @@
 import { LitElement, html } from "lit";
-import { customElement, state, property } from "lit/decorators.js";
+import { customElement, state, property, query } from "lit/decorators.js";
 import { EnGaugeConfig } from "./types";
 import { HomeAssistant } from "custom-card-helpers";
+import { Gauge } from "./gauge";
 
 @customElement("engauge-card")
 export class EngaugeCard extends LitElement {
-  @property({ attribute: false }) public hass!: HomeAssistant;
-  @state() private _config!: EnGaugeConfig;
+  @property() public hass?: HomeAssistant;
+  @property() private _config!: EnGaugeConfig;
   @property() private _helpers: any;
 
+  @query("#engauge") private _element!: HTMLElement;
+
   static getStubConfig() {
-    return {
-      options: {},
-      tabs: [{ label: "Sun", card: { type: "entity", entity: "sun.sun" } }],
-    };
+    return {};
   }
 
   public setConfig(config: EnGaugeConfig) {
@@ -41,13 +41,29 @@ export class EngaugeCard extends LitElement {
     this._helpers = await (window as any).loadCardHelpers();
   }
 
+  private createGauge() {
+    console.log("gage");
+    const w = new Gauge(this._element, {});
+    w.setValue(40);
+    w.setValueAnimated(90, 0.6);
+  }
+
   render() {
     console.log(this._config);
     if (!this.hass || !this._config || !this._helpers) {
       return html`<div>Error</div>`;
     }
 
-    return html` <div>tests ${this._config.arc}</div> `;
+    return html`<div>tests ${this._config.arc}</div>
+      <div
+        id="engauge"
+        class="gauge-container"
+        style="width: 100px; height: 100px"
+      ></div>`;
+  }
+
+  protected updated() {
+    this.createGauge();
   }
 }
 
