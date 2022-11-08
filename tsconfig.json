@@ -15,7 +15,8 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "allowJs": true
   },
   "include": ["src/**/*.ts"]
 }

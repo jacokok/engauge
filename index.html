@@ -2,14 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + Lit + TS</title>
-    <script type="module" src="/src/engauge-card.ts"></script>
+    <script type="module" src="/src/dev.ts"></script>
   </head>
   <body>
-    <my-element-card>
+    <engauge-card>
       <h1>Vite + Lit</h1>
-    </my-element-card>
+    </engauge-card>
+    <div id="test"></div>
+    <div
+      id="engauge"
+      class="gauge-container"
+      style="width: 100px; height: 100px"
+    ></div>
   </body>
 </html>
