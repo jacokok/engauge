@@ -1,0 +1,27 @@
+{
+  "name": "engauge",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/my-element.es.js",
+  "exports": {
+    ".": "./dist/my-element.es.js"
+  },
+  "types": "types/my-element.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "ha": "docker run --rm -p 8123:8123 -v ${PWD}/.hass_dev:/config:Z homeassistant/home-assistant:latest"
+  },
+  "dependencies": {
+    "lit": "^2.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.8.4",
+    "vite": "^3.2.3"
+  }
+}
