@@ -1,9 +1,10 @@
 {
   "name": "engauge",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "main": "dist/my-element.es.js",
+  "repository": "https://github.com/jacokok/engauge",
+  "license": "MIT",
   "exports": {
     ".": "./dist/my-element.es.js"
   },
@@ -15,6 +16,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "watch": "vite build --mode development",
     "ha": "docker run --rm -p 8123:8123 -v ${PWD}/.hass_dev:/config:Z homeassistant/home-assistant:latest"
   },
   "dependencies": {
