@@ -2,7 +2,6 @@ interface Options {
   radius: number;
   startAngle: number;
   endAngle: number;
-  value: number;
   max: number;
   min: number;
   valueDialClass: string;
@@ -12,7 +11,7 @@ interface Options {
   viewBox: string;
   valueLabelClass: string;
   showValue: boolean;
-  color: (val: number) => string;
+  color?: (val: number) => string;
   label: (val: number) => number;
 }
 
@@ -32,12 +31,13 @@ export class Gauge {
     centerX: 50,
     centerY: 50,
   };
+  private value: number = 0;
+  private valuePercentage: number = 0;
 
   private defaultOptions: Options = {
     radius: 40,
     startAngle: 135,
     endAngle: 45,
-    value: 0,
     max: 100,
     min: 0,
     valueDialClass: "value",
@@ -47,9 +47,9 @@ export class Gauge {
     viewBox: "0 0 100 100",
     valueLabelClass: "valueLabelClass",
     showValue: true,
-    color: function (val: number) {
-      return "red";
-    },
+    // color: function (val: number) {
+    //   return "red";
+    // },
     label: function (val: number) {
       return Math.round(val);
     },
@@ -74,7 +74,7 @@ export class Gauge {
     this.gaugeValueElem = this.renderSVG("text", {
       x: "50",
       y: "50",
-      fill: "#999",
+      fill: "var(--primary-text-color)",
       "font-size": "100%",
       "font-family": "sans-serif",
       "font-weight": "normal",
@@ -85,8 +85,9 @@ export class Gauge {
     this.gaugeValuePath = this.renderSVG("path", {
       class: this.options.valueDialClass,
       fill: "none",
-      stroke: "#666",
-      "stroke-width": "2.5",
+      stroke: "var(--primary-color)",
+      "stroke-linecap": "round",
+      "stroke-width": "8",
       d: this.pathString(
         this.options.radius,
         this.options.startAngle,
@@ -109,8 +110,9 @@ export class Gauge {
         this.renderSVG("path", {
           class: this.options.dialClass,
           fill: "none",
-          stroke: "#eee",
-          "stroke-width": "2",
+          stroke: "var(--primary-background-color)",
+          "stroke-width": "8",
+          "stroke-linecap": "round",
           d: this.pathString(
             this.options.radius,
             this.options.startAngle,
@@ -205,11 +207,13 @@ export class Gauge {
   }
 
   private updateGauge(theValue: number, frame?: number) {
+    this.value = theValue;
     const val = this.getValueInPercentage(
       theValue,
       this.options.min,
       this.options.max
     );
+    this.valuePercentage = val;
     const angle = this.getAngle(
       val,
       360 - Math.abs(this.options.startAngle - this.options.endAngle)
@@ -232,10 +236,10 @@ export class Gauge {
   }
 
   private setGaugeColor(value: number, duration: number) {
-    const color = this.options.color.call(this.options, value);
+    const color = this.options.color?.call(this.options, value);
     const dur = duration * 1000;
     const pathTransition = "stroke " + dur + "ms ease";
-    this.gaugeValuePath.style.stroke = color;
+    this.gaugeValuePath.style.stroke = color ?? "var(--primary-color)";
     this.gaugeValuePath.style.transition = pathTransition;
   }
 
@@ -254,28 +258,30 @@ export class Gauge {
   public setValueAnimated(value: number, duration: number) {
     value = this.normalize(value, this.options.min, this.options.max);
 
-    if (this.options.value === value) {
+    if (this.value === value) {
       return;
     }
-    this.updateGauge(value);
+    // this.updateGauge(value);
     this.setGaugeColor(value, duration);
 
     const step = (val: number, frame: number) => {
       this.updateGauge(val, frame);
     };
 
+    console.log("animating", this.value);
+
     this.animate({
-      start: this.options.value || 0,
+      start: this.value || 0,
       end: value,
       duration: duration || 1,
       step: step,
     });
 
-    this.updateGauge(value);
+    // this.updateGauge(value);
   }
 
   public getValue() {
-    return this.options.value;
+    return this.value;
   }
 
   private animate(options: AnimationOptions) {
