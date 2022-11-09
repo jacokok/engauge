@@ -18,7 +18,18 @@ export interface Options {
   valueLabelClass: string;
   showValue: boolean;
   label: (val: number) => number;
+  showText: boolean;
+  showPercentage?: boolean;
+  name?: string;
   color?: (val: number) => string;
   styles?: {};
   attributes?: {};
+}
+
+export interface AnimationOptions {
+  start: number;
+  end: number;
+  duration: number;
+  step: (val: number, frame: number) => void;
+  easing?: (pos: number) => number;
 }

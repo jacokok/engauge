@@ -1,1 +1,2 @@
-import "./engauge-card";
+import "./cards/engauge-card";
+import "./components/engauge-icon";

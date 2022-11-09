@@ -1,8 +1,8 @@
 import { LitElement, html, PropertyValueMap, PropertyValues, css } from "lit";
 import { customElement, state, property, query } from "lit/decorators.js";
-import { EnGaugeConfig } from "./types";
+import { EnGaugeConfig } from "../types";
 import { HomeAssistant, hasConfigOrEntityChanged } from "custom-card-helpers";
-import { Gauge } from "./gauge";
+import { Gauge } from "../lib/gauge";
 
 @customElement("engauge-card")
 export class EngaugeCard extends LitElement {
@@ -30,24 +30,16 @@ export class EngaugeCard extends LitElement {
     };
 
     this._config = { ...defaultConfig, ...config };
-
-    // this._styles = {
-    //   ...this._styles,
-    //   ...this._config.styles,
-    // };
-
-    // this.loadCardHelpers();
   }
-
-  // private async loadCardHelpers() {
-  //   this._helpers = await (window as any).loadCardHelpers();
-  // }
 
   private createGauge() {
     const entityId = this._config?.entity;
-    this._state = this.hass?.states[entityId!].state;
+    const entity = this.hass?.states[entityId!];
+    const friendly_name = entity?.attributes.friendly_name;
+    this._state = entity?.state;
+    this._config.name = friendly_name;
     if (!this._gauge) {
-      this._gauge = new Gauge(this._element, {});
+      this._gauge = new Gauge(this._element, this._config);
       this._gauge.setValueAnimated(parseInt(this._state ?? "0"), 1);
     } else {
       this._gauge.setValueAnimated(parseInt(this._state ?? "0"), 1);
@@ -88,6 +80,11 @@ export class EngaugeCard extends LitElement {
           class="gauge-container"
           style="max-width: 250px;"
         ></div>
+        <engauge-icon
+          slot="icon"
+          .disabled=${false}
+          .icon=${"mdi:information"}
+        ></engauge-icon>
       </ha-card>`;
   }
 

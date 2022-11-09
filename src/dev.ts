@@ -1,4 +1,5 @@
-import { Gauge } from "./gauge";
+import "./index.css";
+import { Gauge } from "./lib/gauge";
 
 const element = document.getElementById("engauge") as HTMLElement;
 

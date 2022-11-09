@@ -1,27 +1,4 @@
-interface Options {
-  radius: number;
-  startAngle: number;
-  endAngle: number;
-  max: number;
-  min: number;
-  valueDialClass: string;
-  valueTextClass: string;
-  dialClass: string;
-  gaugeClass: string;
-  viewBox: string;
-  valueLabelClass: string;
-  showValue: boolean;
-  label: (val: number) => number;
-  color?: (val: number) => string;
-}
-
-interface AnimationOptions {
-  start: number;
-  end: number;
-  duration: number;
-  step: (val: number, frame: number) => void;
-  easing?: (pos: number) => number;
-}
+import { Options, AnimationOptions } from "../types";
 
 export class Gauge {
   private gaugeContainer: HTMLElement;
@@ -33,6 +10,7 @@ export class Gauge {
   };
   private value: number = 0;
   private valuePercentage: number = 0;
+  private text: string;
 
   private defaultOptions: Options = {
     radius: 40,
@@ -47,6 +25,7 @@ export class Gauge {
     viewBox: "0 0 100 100",
     valueLabelClass: "valueLabelClass",
     showValue: true,
+    showText: true,
     // color: function (val: number) {
     //   return "red";
     // },
@@ -56,11 +35,14 @@ export class Gauge {
   };
 
   private gaugeValueElem: SVGElement;
+  private gaugeTextElem: SVGElement;
   private gaugeValuePath: SVGElement;
 
   constructor(elem: HTMLElement, options: Partial<Options>) {
     this.gaugeContainer = elem;
     this.options = { ...this.defaultOptions, ...options };
+
+    this.text = this.options.name ?? "";
 
     this.requestAnimationFrame = window.requestAnimationFrame;
 
@@ -76,6 +58,17 @@ export class Gauge {
       y: "50",
       fill: "var(--primary-text-color)",
       "font-size": "100%",
+      "font-family": "sans-serif",
+      "font-weight": "normal",
+      "text-anchor": "middle",
+      "alignment-baseline": "middle",
+      "dominant-baseline": "central",
+    });
+    this.gaugeTextElem = this.renderSVG("text", {
+      x: "50",
+      y: "65",
+      fill: "var(--primary-text-color)",
+      "font-size": "70%",
       "font-family": "sans-serif",
       "font-weight": "normal",
       "text-anchor": "middle",
@@ -120,7 +113,10 @@ export class Gauge {
             flag
           ),
         }),
-        this.renderSVG("g", { class: "text-container" }, [this.gaugeValueElem]),
+        this.renderSVG("g", { class: "text-value-container" }, [
+          this.gaugeValueElem,
+        ]),
+        this.renderSVG("g", { class: "text-container" }, [this.gaugeTextElem]),
         this.gaugeValuePath,
       ]
     );
@@ -221,8 +217,14 @@ export class Gauge {
     const flag = angle <= 180 ? 0 : 1;
     if (this.options.showValue) {
       this.gaugeValueElem.textContent = this.options.label
-        .call(this.options, theValue)
+        .call(
+          this.options,
+          this.options.showPercentage ? this.valuePercentage : this.value
+        )
         .toString();
+    }
+    if (this.options.showText && this.text) {
+      this.gaugeTextElem.textContent = this.text;
     }
     this.gaugeValuePath.setAttribute(
       "d",
