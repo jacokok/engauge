@@ -1,4 +1,6 @@
 import "./index.css";
+import "./components/engauge-test";
+import "./components/engauge-icon";
 import { Gauge } from "./lib/gauge";
 
 const element = document.getElementById("engauge") as HTMLElement;

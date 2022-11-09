@@ -85,13 +85,15 @@ export class Gauge {
     });
 
     const backgroundCircle = this.renderSVG("circle", {
-      fill: "var(--primary-background-color)",
+      fill: "var(--secondary-background-color)",
       class: "background",
       stroke: "none",
       cx: "50",
       cy: "50",
       r: "35",
     });
+
+    const icon = document.createElement("engauge-icon");
 
     var angle = this.getAngle(
       100,
@@ -124,6 +126,17 @@ export class Gauge {
         ]),
         this.renderSVG("g", { class: "text-container" }, [this.gaugeTextElem]),
         this.gaugeValuePath,
+        this.renderSVG(
+          "foreignobject",
+          {
+            class: "icon",
+            x: "50",
+            y: "50",
+            width: "100",
+            height: "100",
+          },
+          [icon]
+        ),
       ]
     );
 

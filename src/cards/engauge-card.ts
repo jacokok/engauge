@@ -51,9 +51,10 @@ export class EngaugeCard extends LitElement {
       return html`<div>Error</div>`;
     }
 
-    return html` <style>
+    return html`
+      <style>
         ha-card {
-          height: 100%;
+          /* height: 100%;
           overflow: hidden;
           padding: 16px;
           display: flex;
@@ -61,7 +62,7 @@ export class EngaugeCard extends LitElement {
           justify-content: center;
           flex-direction: column;
           box-sizing: border-box;
-          cursor: pointer;
+          cursor: pointer; */
         }
 
         #engauge {
@@ -74,18 +75,20 @@ export class EngaugeCard extends LitElement {
           height: 100%;
         }
       </style>
+
       <ha-card @click=${this.clickHandler}>
+        ${this.renderIcon("mdi:information")}
         <div
           id="engauge"
           class="gauge-container"
           style="max-width: 250px;"
         ></div>
-        <engauge-icon
-          slot="icon"
-          .disabled=${false}
-          .icon=${"mdi:information"}
-        ></engauge-icon>
-      </ha-card>`;
+      </ha-card>
+    `;
+  }
+
+  renderIcon(icon: string) {
+    return html`<engauge-icon icon=${icon}></engauge-icon>`;
   }
 
   // protected shouldUpdate(changedProps: PropertyValues): boolean {
