@@ -10,6 +10,7 @@ export interface EnGaugeConfig
   measurement?: string;
   horizontal?: boolean;
   size?: number;
+  level?: Array<Level>;
 }
 
 interface Icon {
@@ -26,9 +27,12 @@ export interface GaugeOptions {
   min: number;
   label: (val: number) => number;
   backgroundColor: string;
+  dialColor: string;
+  dialWidth: number;
+  dialRounded: boolean;
+  gaugeColor: string;
+  gaugeWidth: number;
   color?: (val: number) => string;
-  styles?: {};
-  attributes?: {};
 }
 
 export interface AnimationOptions {
@@ -39,8 +43,7 @@ export interface AnimationOptions {
   easing?: (pos: number) => number;
 }
 
-export interface LevelDefinition {
-  level: number;
-  stroke: string;
-  label?: string;
+export interface Level {
+  value: number;
+  color: string;
 }

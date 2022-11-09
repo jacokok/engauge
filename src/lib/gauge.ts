@@ -13,7 +13,12 @@ export class Gauge {
     endAngle: 270,
     max: 100,
     min: 0,
-    backgroundColor: "var(--secondary-background-color)",
+    backgroundColor: "none",
+    dialColor: "var(--primary-color)",
+    gaugeColor: "var(--primary-background-color)",
+    dialRounded: true,
+    dialWidth: 12,
+    gaugeWidth: 12,
     // color: function (val: number) {
     //   return "red";
     // },
@@ -28,42 +33,41 @@ export class Gauge {
     this.requestAnimationFrame = window.requestAnimationFrame;
 
     if (this.options.startAngle < this.options.endAngle) {
-      console.log("WARN! startAngle < endAngle, Swapping");
       let tmp = this.options.startAngle;
       this.options.startAngle = this.options.endAngle;
       this.options.endAngle = tmp;
     }
 
-    const gaugeValueElem = this.renderSVG("text", {
-      x: "50",
-      y: "50",
-      class: "text",
-      fill: "var(--primary-text-color)",
-      "font-size": "100%",
-      "font-family": "sans-serif",
-      "font-weight": "normal",
-      "text-anchor": "middle",
-      "alignment-baseline": "middle",
-      "dominant-baseline": "central",
-    });
-    const gaugeTextElem = this.renderSVG("text", {
-      x: "50",
-      y: "65",
-      class: "text-value",
-      fill: "var(--primary-text-color)",
-      "font-size": "70%",
-      "font-family": "sans-serif",
-      "font-weight": "normal",
-      "text-anchor": "middle",
-      "alignment-baseline": "middle",
-      "dominant-baseline": "central",
-    });
+    // const gaugeValueElem = this.renderSVG("text", {
+    //   x: "50",
+    //   y: "50",
+    //   class: "text",
+    //   fill: "var(--primary-text-color)",
+    //   "font-size": "100%",
+    //   "font-family": "sans-serif",
+    //   "font-weight": "normal",
+    //   "text-anchor": "middle",
+    //   "alignment-baseline": "middle",
+    //   "dominant-baseline": "central",
+    // });
+    // const gaugeTextElem = this.renderSVG("text", {
+    //   x: "50",
+    //   y: "65",
+    //   class: "text-value",
+    //   fill: "var(--primary-text-color)",
+    //   "font-size": "70%",
+    //   "font-family": "sans-serif",
+    //   "font-weight": "normal",
+    //   "text-anchor": "middle",
+    //   "alignment-baseline": "middle",
+    //   "dominant-baseline": "central",
+    // });
     this.gaugeValuePath = this.renderSVG("path", {
       class: "value",
       fill: "none",
-      stroke: "var(--primary-color)",
-      "stroke-linecap": "round",
-      "stroke-width": "12",
+      stroke: this.options.dialColor,
+      "stroke-linecap": this.options.dialRounded ? "round" : "unset",
+      "stroke-width": this.options.dialWidth.toString(),
       d: this.pathString(
         this.options.radius,
         this.options.startAngle,
@@ -96,9 +100,9 @@ export class Gauge {
         this.renderSVG("path", {
           class: "dial",
           fill: "none",
-          stroke: "var(--primary-background-color)",
-          "stroke-width": "12",
-          "stroke-linecap": "round",
+          stroke: this.options.gaugeColor,
+          "stroke-width": this.options.gaugeWidth.toString(),
+          "stroke-linecap": this.options.dialRounded ? "round" : "unset",
           d: this.pathString(
             this.options.radius,
             this.options.startAngle,
@@ -223,7 +227,7 @@ export class Gauge {
     const color = this.options.color?.call(this.options, value);
     const dur = duration * 1000;
     const pathTransition = "stroke " + dur + "ms ease";
-    this.gaugeValuePath.style.stroke = color ?? "var(--primary-color)";
+    this.gaugeValuePath.style.stroke = color ?? this.options.dialColor;
     this.gaugeValuePath.style.transition = pathTransition;
   }
 
@@ -233,9 +237,7 @@ export class Gauge {
 
   public setValue(value: number) {
     value = this.normalize(value, this.options.min, this.options.max);
-    // if (this.options.color) {
     this.setGaugeColor(value, 0);
-    // }
     this.updateGauge(value);
   }
 
@@ -245,7 +247,6 @@ export class Gauge {
     if (this.value === value) {
       return;
     }
-    // this.updateGauge(value);
     this.setGaugeColor(value, duration);
 
     const step = (val: number, frame: number) => {
@@ -258,8 +259,6 @@ export class Gauge {
       duration: duration || 1,
       step: step,
     });
-
-    // this.updateGauge(value);
   }
 
   public getValue() {

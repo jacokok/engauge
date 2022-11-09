@@ -33,9 +33,29 @@ export class EngaugeCard extends LitElement {
       type: "engauge-card",
       horizontal: false,
       icon: {},
+      level: [],
     };
 
     this._config = { ...defaultConfig, ...config };
+
+    if (this._config.level && this._config.level.length > 0) {
+      const l = this._config.level;
+      const colorFn = (val: number): string => {
+        const ll = l.slice().sort((a, b) => (a.value > b.value ? -1 : 1));
+
+        for (const i of ll) {
+          if (val >= i.value) {
+            return i.color;
+          }
+        }
+        return l[0].color;
+      };
+
+      this._config.gauge = Object.assign({}, this._config.gauge, {
+        color: colorFn,
+      });
+    }
+
     this.createGauge(true);
   }
 
@@ -136,7 +156,7 @@ export class EngaugeCard extends LitElement {
       .value {
         font-size: 28px;
         margin-right: 4px;
-        margin-top: 4px;
+        margin-top: 6px;
         color: var(--primary-text-color);
       }
 
@@ -152,7 +172,7 @@ export class EngaugeCard extends LitElement {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        margin-top: 4px;
+        /* margin-top: 2px; */
       }
 
       .text {
