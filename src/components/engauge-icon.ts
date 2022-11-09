@@ -8,6 +8,14 @@ export class EngaugeIcon extends LitElement {
   @property() public disabled: boolean = false;
 
   protected render(): TemplateResult {
-    return html`<ha-icon icon=${this.icon ?? "mdi:information"}></ha-icon>`;
+    return html`
+      <style>
+        :host {
+          --mdc-icon-size: 70px;
+          position: absolute;
+        }
+      </style>
+      <ha-icon icon=${this.icon ?? "mdi:information"}></ha-icon>
+    `;
   }
 }

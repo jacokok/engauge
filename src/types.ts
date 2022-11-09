@@ -2,6 +2,8 @@ import { LovelaceCardConfig } from "custom-card-helpers";
 
 export interface EnGaugeConfig extends LovelaceCardConfig, Partial<Options> {
   entity: string;
+  name?: string;
+  measurement?: string;
 }
 
 export interface Options {
@@ -14,7 +16,7 @@ export interface Options {
   label: (val: number) => number;
   showText: boolean;
   showPercentage?: boolean;
-  name?: string;
+
   color?: (val: number) => string;
   styles?: {};
   attributes?: {};

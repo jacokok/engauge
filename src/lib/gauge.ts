@@ -1,7 +1,6 @@
 import { Options, AnimationOptions } from "../types";
 
 export class Gauge {
-  private gaugeContainer: HTMLElement;
   private options: Options;
   private requestAnimationFrame: (callback: FrameRequestCallback) => number;
   private gaugeDefaults = {
@@ -9,13 +8,12 @@ export class Gauge {
     centerY: 50,
   };
   private value: number = 0;
-  private valuePercentage: number = 0;
-  private text: string;
+  private gaugeValuePath: SVGElement;
 
   private defaultOptions: Options = {
     radius: 40,
     startAngle: 180,
-    endAngle: 181,
+    endAngle: 179,
     max: 100,
     min: 0,
     showValue: true,
@@ -28,15 +26,8 @@ export class Gauge {
     },
   };
 
-  private gaugeValueElem: SVGElement;
-  private gaugeTextElem: SVGElement;
-  private gaugeValuePath: SVGElement;
-
   constructor(elem: HTMLElement, options: Partial<Options>) {
-    this.gaugeContainer = elem;
     this.options = { ...this.defaultOptions, ...options };
-
-    this.text = this.options.name ?? "";
 
     this.requestAnimationFrame = window.requestAnimationFrame;
 
@@ -47,7 +38,7 @@ export class Gauge {
       this.options.endAngle = tmp;
     }
 
-    this.gaugeValueElem = this.renderSVG("text", {
+    const gaugeValueElem = this.renderSVG("text", {
       x: "50",
       y: "50",
       class: "text",
@@ -59,7 +50,7 @@ export class Gauge {
       "alignment-baseline": "middle",
       "dominant-baseline": "central",
     });
-    this.gaugeTextElem = this.renderSVG("text", {
+    const gaugeTextElem = this.renderSVG("text", {
       x: "50",
       y: "65",
       class: "text-value",
@@ -76,7 +67,7 @@ export class Gauge {
       fill: "none",
       stroke: "var(--primary-color)",
       "stroke-linecap": "round",
-      "stroke-width": "8",
+      "stroke-width": "12",
       d: this.pathString(
         this.options.radius,
         this.options.startAngle,
@@ -112,7 +103,7 @@ export class Gauge {
           class: "dial",
           fill: "none",
           stroke: "var(--primary-background-color)",
-          "stroke-width": "8",
+          "stroke-width": "12",
           "stroke-linecap": "round",
           d: this.pathString(
             this.options.radius,
@@ -121,22 +112,11 @@ export class Gauge {
             flag
           ),
         }),
-        this.renderSVG("g", { class: "text-value-container" }, [
-          this.gaugeValueElem,
-        ]),
-        this.renderSVG("g", { class: "text-container" }, [this.gaugeTextElem]),
+        // this.renderSVG("g", { class: "text-value-container" }, [
+        //   gaugeValueElem,
+        // ]),
+        // this.renderSVG("g", { class: "text-container" }, [gaugeTextElem]),
         this.gaugeValuePath,
-        this.renderSVG(
-          "foreignobject",
-          {
-            class: "icon",
-            x: "50",
-            y: "50",
-            width: "100",
-            height: "100",
-          },
-          [icon]
-        ),
       ]
     );
 
@@ -228,23 +208,12 @@ export class Gauge {
       this.options.min,
       this.options.max
     );
-    this.valuePercentage = val;
     const angle = this.getAngle(
       val,
       360 - Math.abs(this.options.startAngle - this.options.endAngle)
     );
     const flag = angle <= 180 ? 0 : 1;
-    if (this.options.showValue) {
-      this.gaugeValueElem.textContent = this.options.label
-        .call(
-          this.options,
-          this.options.showPercentage ? this.valuePercentage : this.value
-        )
-        .toString();
-    }
-    if (this.options.showText && this.text) {
-      this.gaugeTextElem.textContent = this.text;
-    }
+
     this.gaugeValuePath.setAttribute(
       "d",
       this.pathString(

@@ -18,5 +18,5 @@
     "types": ["vite/client"],
     "allowJs": true
   },
-  "include": ["src/**/*.ts", "src/components/**/*.ts"]
+  "include": ["src/**/*.ts"]
 }

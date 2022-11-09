@@ -1,14 +1,15 @@
 import "./index.css";
 import "./components/engauge-test";
 import "./components/engauge-icon";
-import { Gauge } from "./lib/gauge";
+import "./components/engauge-progress";
+// import { Gauge } from "./lib/gauge";
 
-const element = document.getElementById("engauge") as HTMLElement;
+// const element = document.getElementById("engauge") as HTMLElement;
 
-const w = new Gauge(element, {});
+// const w = new Gauge(element, {});
 
-w.setValue(40);
-w.setValueAnimated(60, 0.6);
+// w.setValue(40);
+// w.setValueAnimated(60, 0.6);
 
 // import "./svg-gauge/gauge.js";
 // import { GaugeType } from "gauge";

@@ -8,7 +8,6 @@ import { Gauge } from "../lib/gauge";
 export class EngaugeCard extends LitElement {
   @property() public hass?: HomeAssistant;
   @property() private _config!: EnGaugeConfig;
-  // @property() private _helpers: any;
 
   @query("#engauge") private _element!: HTMLElement;
 
@@ -36,8 +35,13 @@ export class EngaugeCard extends LitElement {
     const entityId = this._config?.entity;
     const entity = this.hass?.states[entityId!];
     const friendly_name = entity?.attributes.friendly_name;
+    const measurement = entity?.attributes.unit_of_measurement;
     this._state = entity?.state;
-    this._config.name = friendly_name;
+    this._config.name = this._config.name ?? friendly_name;
+    this._config.measurement = this._config.measurement ?? measurement;
+    if (!this._element) {
+      return;
+    }
     if (!this._gauge) {
       this._gauge = new Gauge(this._element, this._config);
       this._gauge.setValueAnimated(parseInt(this._state ?? "0"), 1);
@@ -51,10 +55,12 @@ export class EngaugeCard extends LitElement {
       return html`<div>Error</div>`;
     }
 
+    this.createGauge();
+
     return html`
       <style>
         ha-card {
-          /* height: 100%;
+          height: 100%;
           overflow: hidden;
           padding: 16px;
           display: flex;
@@ -62,7 +68,14 @@ export class EngaugeCard extends LitElement {
           justify-content: center;
           flex-direction: column;
           box-sizing: border-box;
-          cursor: pointer; */
+          cursor: pointer;
+        }
+
+        .gauge-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
         }
 
         #engauge {
@@ -74,15 +87,32 @@ export class EngaugeCard extends LitElement {
         svg.gauge {
           height: 100%;
         }
+
+        .value {
+          font-size: 28px;
+          margin-right: 4px;
+          margin-top: 4px;
+          color: var(--primary-text-color);
+        }
+
+        .name {
+          color: var(--secondary-text-color);
+          font-weight: 500;
+          font-size: 16px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-top: 4px;
+        }
       </style>
 
       <ha-card @click=${this.clickHandler}>
-        ${this.renderIcon("mdi:information")}
-        <div
-          id="engauge"
-          class="gauge-container"
-          style="max-width: 250px;"
-        ></div>
+        <div class="gauge-container">
+          ${this.renderIcon("mdi:information-outline")}
+          <div id="engauge"></div>
+        </div>
+        <div class="value">${this._state} ${this._config.measurement}</div>
+        <div class="name">${this._config.name}</div>
       </ha-card>
     `;
   }
@@ -106,8 +136,6 @@ export class EngaugeCard extends LitElement {
   // }
 
   protected updated() {
-    const entityId = this._config?.entity;
-    this._state = this.hass?.states[entityId!].state;
     this.createGauge();
   }
 
