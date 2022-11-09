@@ -27,8 +27,6 @@ export class EngaugeCard extends LitElement {
     const defaultConfig: EnGaugeConfig = {
       entity: "number.large_range",
       type: "engauge-card",
-      arc: 3,
-      another: 10,
     };
 
     this._config = { ...defaultConfig, ...config };
@@ -84,7 +82,7 @@ export class EngaugeCard extends LitElement {
           height: 100%;
         }
       </style>
-      <ha-card>
+      <ha-card @click=${this.clickHandler}>
         <div
           id="engauge"
           class="gauge-container"
@@ -111,6 +109,22 @@ export class EngaugeCard extends LitElement {
     const entityId = this._config?.entity;
     this._state = this.hass?.states[entityId!].state;
     this.createGauge();
+  }
+
+  clickHandler() {
+    this._haInfo({ entityId: this._config?.entity });
+  }
+
+  _haInfo(detail: { entityId: string }) {
+    var event = new Event("hass-more-info", {
+      bubbles: true,
+      cancelable: false,
+      composed: true,
+    }) as any;
+
+    event.detail = detail || {};
+    this.shadowRoot?.dispatchEvent(event);
+    return event;
   }
 }
 

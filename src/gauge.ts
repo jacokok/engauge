@@ -11,8 +11,8 @@ interface Options {
   viewBox: string;
   valueLabelClass: string;
   showValue: boolean;
-  color?: (val: number) => string;
   label: (val: number) => number;
+  color?: (val: number) => string;
 }
 
 interface AnimationOptions {
@@ -267,8 +267,6 @@ export class Gauge {
     const step = (val: number, frame: number) => {
       this.updateGauge(val, frame);
     };
-
-    console.log("animating", this.value);
 
     this.animate({
       start: this.value || 0,
