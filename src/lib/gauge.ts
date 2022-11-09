@@ -192,7 +192,7 @@ export class Gauge {
     ].join(" ");
   }
 
-  private updateGauge(theValue: number, frame?: number) {
+  private updateGauge(theValue: number) {
     this.value = theValue;
     const val = this.getValueInPercentage(
       theValue,
@@ -242,8 +242,8 @@ export class Gauge {
     }
     this.setGaugeColor(value, duration);
 
-    const step = (val: number, frame: number) => {
-      this.updateGauge(val, frame);
+    const step = (val: number) => {
+      this.updateGauge(val);
     };
 
     this.animate({
