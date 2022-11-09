@@ -123,7 +123,9 @@ export class EngaugeCard extends LitElement {
   renderIcon() {
     return html`<engauge-icon
       icon=${this._icon ?? "mdi:information-outline"}
-      color=${ifDefined(this._config.icon?.color)}
+      color=${ifDefined(
+        this._config.icon?.color ?? this._config.gauge?.dialColor
+      )}
       size=${ifDefined(this._config.icon?.size)}
     ></engauge-icon>`;
   }

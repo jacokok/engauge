@@ -8,7 +8,6 @@ export class Gauge {
   private gaugeValuePath: SVGElement;
 
   private defaultOptions: GaugeOptions = {
-    radius: 40,
     startAngle: 271,
     endAngle: 270,
     max: 100,
@@ -19,12 +18,6 @@ export class Gauge {
     dialRounded: true,
     dialWidth: 12,
     gaugeWidth: 12,
-    // color: function (val: number) {
-    //   return "red";
-    // },
-    label: function (val: number) {
-      return Math.round(val);
-    },
   };
 
   constructor(elem: HTMLElement, options: Partial<GaugeOptions>) {
@@ -69,7 +62,7 @@ export class Gauge {
       "stroke-linecap": this.options.dialRounded ? "round" : "unset",
       "stroke-width": this.options.dialWidth.toString(),
       d: this.pathString(
-        this.options.radius,
+        40,
         this.options.startAngle,
         this.options.startAngle
       ).toString(),
@@ -104,7 +97,7 @@ export class Gauge {
           "stroke-width": this.options.gaugeWidth.toString(),
           "stroke-linecap": this.options.dialRounded ? "round" : "unset",
           d: this.pathString(
-            this.options.radius,
+            40,
             this.options.startAngle,
             this.options.endAngle,
             flag
@@ -215,7 +208,7 @@ export class Gauge {
     this.gaugeValuePath.setAttribute(
       "d",
       this.pathString(
-        this.options.radius,
+        40,
         this.options.startAngle,
         angle + this.options.startAngle,
         flag

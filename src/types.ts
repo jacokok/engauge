@@ -20,12 +20,11 @@ interface Icon {
 }
 
 export interface GaugeOptions {
-  radius: number;
   startAngle: number;
   endAngle: number;
   max: number;
   min: number;
-  label: (val: number) => number;
+  // label: (val: number) => number;
   backgroundColor: string;
   dialColor: string;
   dialWidth: number;
