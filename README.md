@@ -13,3 +13,7 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 3. Go to "Frontend" section
 4. Click button with "+" icon
 5. Search for "Mushroom"
+
+### Preview
+
+![preview](images/preview.svg)
