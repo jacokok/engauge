@@ -12,8 +12,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "watch": "vite build --mode development",
-    "preview": "vite build --mode development & vite preview --host",
+    "watch": "vite build --mode development --watch",
+    "preview": "vite build --mode development --watch & vite preview --host",
     "ha": "docker run --rm -p 8123:8123 -v ${PWD}/.hass_dev:/config:Z homeassistant/home-assistant:latest"
   },
   "dependencies": {

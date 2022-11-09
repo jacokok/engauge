@@ -12,8 +12,5 @@ export default defineConfig({
         entryFileNames: "[name].js",
       },
     },
-
-    watch: {},
-    minify: false,
   },
 });
