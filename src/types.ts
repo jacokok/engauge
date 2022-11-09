@@ -1,22 +1,31 @@
 import { LovelaceCardConfig } from "custom-card-helpers";
 
-export interface EnGaugeConfig extends LovelaceCardConfig, Partial<Options> {
+export interface EnGaugeConfig
+  extends LovelaceCardConfig,
+    Partial<GaugeOptions> {
   entity: string;
+  icon: Icon;
+  gauge?: GaugeOptions;
   name?: string;
   measurement?: string;
+  horizontal?: boolean;
+  size?: number;
 }
 
-export interface Options {
+interface Icon {
+  name?: string;
+  color?: string;
+  size?: number;
+}
+
+export interface GaugeOptions {
   radius: number;
   startAngle: number;
   endAngle: number;
   max: number;
   min: number;
-  showValue: boolean;
   label: (val: number) => number;
-  showText: boolean;
-  showPercentage?: boolean;
-
+  backgroundColor: string;
   color?: (val: number) => string;
   styles?: {};
   attributes?: {};
@@ -28,4 +37,10 @@ export interface AnimationOptions {
   duration: number;
   step: (val: number, frame: number) => void;
   easing?: (pos: number) => number;
+}
+
+export interface LevelDefinition {
+  level: number;
+  stroke: string;
+  label?: string;
 }

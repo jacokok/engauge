@@ -1,23 +1,19 @@
-import { Options, AnimationOptions } from "../types";
+import { GaugeOptions, AnimationOptions } from "../types";
 
 export class Gauge {
-  private options: Options;
+  private options: GaugeOptions;
   private requestAnimationFrame: (callback: FrameRequestCallback) => number;
-  private gaugeDefaults = {
-    centerX: 50,
-    centerY: 50,
-  };
+
   private value: number = 0;
   private gaugeValuePath: SVGElement;
 
-  private defaultOptions: Options = {
+  private defaultOptions: GaugeOptions = {
     radius: 40,
-    startAngle: 180,
-    endAngle: 179,
+    startAngle: 271,
+    endAngle: 270,
     max: 100,
     min: 0,
-    showValue: true,
-    showText: true,
+    backgroundColor: "var(--secondary-background-color)",
     // color: function (val: number) {
     //   return "red";
     // },
@@ -26,7 +22,7 @@ export class Gauge {
     },
   };
 
-  constructor(elem: HTMLElement, options: Partial<Options>) {
+  constructor(elem: HTMLElement, options: Partial<GaugeOptions>) {
     this.options = { ...this.defaultOptions, ...options };
 
     this.requestAnimationFrame = window.requestAnimationFrame;
@@ -76,15 +72,13 @@ export class Gauge {
     });
 
     const backgroundCircle = this.renderSVG("circle", {
-      fill: "var(--secondary-background-color)",
+      fill: this.options.backgroundColor,
       class: "background",
       stroke: "none",
       cx: "50",
       cy: "50",
-      r: "35",
+      r: "30",
     });
-
-    const icon = document.createElement("engauge-icon");
 
     var angle = this.getAngle(
       100,
@@ -119,7 +113,7 @@ export class Gauge {
         this.gaugeValuePath,
       ]
     );
-
+    elem.textContent = "";
     elem.appendChild(gaugeElement);
   }
 
@@ -167,8 +161,8 @@ export class Gauge {
   }
 
   private getDialCoords(radius: number, startAngle: number, endAngle: number) {
-    var cx = this.gaugeDefaults.centerX,
-      cy = this.gaugeDefaults.centerY;
+    var cx = 50,
+      cy = 50;
     return {
       end: this.getCartesian(cx, cy, radius, endAngle),
       start: this.getCartesian(cx, cy, radius, startAngle),
