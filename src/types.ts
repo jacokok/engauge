@@ -10,12 +10,6 @@ export interface Options {
   endAngle: number;
   max: number;
   min: number;
-  valueDialClass: string;
-  valueTextClass: string;
-  dialClass: string;
-  gaugeClass: string;
-  viewBox: string;
-  valueLabelClass: string;
   showValue: boolean;
   label: (val: number) => number;
   showText: boolean;

@@ -14,16 +14,10 @@ export class Gauge {
 
   private defaultOptions: Options = {
     radius: 40,
-    startAngle: 135,
-    endAngle: 45,
+    startAngle: 180,
+    endAngle: 181,
     max: 100,
     min: 0,
-    valueDialClass: "value",
-    valueTextClass: "value-text",
-    dialClass: "dial",
-    gaugeClass: "gauge",
-    viewBox: "0 0 100 100",
-    valueLabelClass: "valueLabelClass",
     showValue: true,
     showText: true,
     // color: function (val: number) {
@@ -56,6 +50,7 @@ export class Gauge {
     this.gaugeValueElem = this.renderSVG("text", {
       x: "50",
       y: "50",
+      class: "text",
       fill: "var(--primary-text-color)",
       "font-size": "100%",
       "font-family": "sans-serif",
@@ -67,6 +62,7 @@ export class Gauge {
     this.gaugeTextElem = this.renderSVG("text", {
       x: "50",
       y: "65",
+      class: "text-value",
       fill: "var(--primary-text-color)",
       "font-size": "70%",
       "font-family": "sans-serif",
@@ -76,7 +72,7 @@ export class Gauge {
       "dominant-baseline": "central",
     });
     this.gaugeValuePath = this.renderSVG("path", {
-      class: this.options.valueDialClass,
+      class: "value",
       fill: "none",
       stroke: "var(--primary-color)",
       "stroke-linecap": "round",
@@ -88,6 +84,15 @@ export class Gauge {
       ).toString(),
     });
 
+    const backgroundCircle = this.renderSVG("circle", {
+      fill: "var(--primary-background-color)",
+      class: "background",
+      stroke: "none",
+      cx: "50",
+      cy: "50",
+      r: "35",
+    });
+
     var angle = this.getAngle(
       100,
       360 - Math.abs(this.options.startAngle - this.options.endAngle)
@@ -96,12 +101,13 @@ export class Gauge {
     var gaugeElement = this.renderSVG(
       "svg",
       {
-        viewBox: this.options.viewBox || "0 0 100 100",
-        class: this.options.gaugeClass,
+        viewBox: "0 0 100 100",
+        class: "gauge",
       },
       [
+        backgroundCircle,
         this.renderSVG("path", {
-          class: this.options.dialClass,
+          class: "dial",
           fill: "none",
           stroke: "var(--primary-background-color)",
           "stroke-width": "8",

@@ -6,7 +6,7 @@ const element = document.getElementById("engauge") as HTMLElement;
 const w = new Gauge(element, {});
 
 w.setValue(40);
-w.setValueAnimated(90, 0.6);
+w.setValueAnimated(60, 0.6);
 
 // import "./svg-gauge/gauge.js";
 // import { GaugeType } from "gauge";
