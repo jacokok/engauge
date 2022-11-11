@@ -168,7 +168,9 @@ export class EngaugeGauge extends LitElement {
     }
   }
 
-  private setGaugeColor(color: string) {}
+  private setGaugeColor(color: string) {
+    console.log(color);
+  }
 
   public setValue() {
     const value = this.normalizeAnim(this.value, this.min, this.max);

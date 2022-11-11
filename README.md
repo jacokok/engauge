@@ -17,3 +17,14 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 ### Preview
 
 ![preview](images/preview.svg)
+
+## Options
+
+| Name     | Type   | Requirement  | Description           | Default     |
+| -------- | ------ | ------------ | --------------------- | ----------- |
+| `type`   | string | **Required** | `custom:engauge-card` |             |
+| `entity` | string | *Required**  | entity_id             |             |
+| `name`   | string | **Optional** | Name                  | From Entity |
+| `unit`   | string | **Optional** | The unit of measure   | From Entity |
+| `min`    | string | **Optional** | Minimum gauge value   | 0           |
+| `max`    | string | **Optional** | Minimum gauge value   | 100         |
