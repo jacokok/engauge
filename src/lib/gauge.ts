@@ -279,7 +279,7 @@ export class Gauge {
     function animate() {
       var progress = currentIteration / iterations,
         value = change * easing(progress) + start;
-      step(value, currentIteration);
+      step(value);
       currentIteration += 1;
 
       if (progress < 1) {

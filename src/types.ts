@@ -1,13 +1,12 @@
 import { LovelaceCardConfig } from "custom-card-helpers";
 
-export interface EnGaugeConfig
-  extends LovelaceCardConfig,
-    Partial<GaugeOptions> {
+export interface EngaugeConfig extends LovelaceCardConfig {
   entity: string;
-  icon: Icon;
-  gauge?: GaugeOptions;
   name?: string;
-  measurement?: string;
+  unit?: string;
+  icon?: Icon;
+  severity?: Severity;
+  gauge?: GaugeOptions;
   horizontal?: boolean;
   size?: number;
   level?: Array<Level>;
@@ -17,6 +16,12 @@ interface Icon {
   name?: string;
   color?: string;
   size?: number;
+}
+
+interface Severity {
+  green: number;
+  yellow: number;
+  red: number;
 }
 
 export interface GaugeOptions {
@@ -38,7 +43,7 @@ export interface AnimationOptions {
   start: number;
   end: number;
   duration: number;
-  step: (val: number, frame: number) => void;
+  step: (val: number) => void;
   easing?: (pos: number) => number;
 }
 

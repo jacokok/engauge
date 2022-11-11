@@ -1,6 +1,6 @@
 import { LitElement, html, css, CSSResultGroup } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
-import { EnGaugeConfig } from "../types";
+import { EngaugeConfig } from "../types";
 import { HomeAssistant } from "custom-card-helpers";
 import { Gauge } from "../lib/gauge";
 import { styleMap } from "lit-html/directives/style-map.js";
@@ -9,26 +9,26 @@ import { ifDefined } from "lit/directives/if-defined.js";
 @customElement("engauge-card")
 export class EngaugeCard extends LitElement {
   @property() public hass?: HomeAssistant;
-  @property() private _config!: EnGaugeConfig;
+  @property() private _config!: EngaugeConfig;
 
   @query("#engauge") private _element!: HTMLElement;
 
-  private _state?: string;
+  private _state: number = 0;
   private _gauge?: Gauge;
   private _name?: string;
-  private _measurement?: string;
+  private _unit?: string;
   private _icon?: string;
 
   static getStubConfig() {
     return {};
   }
 
-  public setConfig(config: EnGaugeConfig) {
+  public setConfig(config: EngaugeConfig) {
     if (!config) {
       throw new Error("No configuration.");
     }
 
-    const defaultConfig: EnGaugeConfig = {
+    const defaultConfig: EngaugeConfig = {
       entity: "number.large_range",
       type: "engauge-card",
       horizontal: false,
@@ -63,11 +63,11 @@ export class EngaugeCard extends LitElement {
     const entityId = this._config?.entity;
     const entity = this.hass?.states[entityId!];
     const friendly_name = entity?.attributes.friendly_name;
-    const measurement = entity?.attributes.unit_of_measurement;
+    const unit = entity?.attributes.unit_of_measurement;
     const icon = entity?.attributes.icon;
-    this._state = entity?.state;
+    this._state = entity?.state ? +entity.state : 0;
     this._name = this._config.name ?? friendly_name;
-    this._measurement = this._config.measurement ?? measurement;
+    this._unit = this._config.measurement ?? unit;
     this._icon = this._config.icon?.name ?? icon;
 
     if (!this._element) {
@@ -79,9 +79,9 @@ export class EngaugeCard extends LitElement {
 
     if (!this._gauge) {
       this._gauge = new Gauge(this._element, this._config.gauge ?? {});
-      this._gauge.setValueAnimated(parseInt(this._state ?? "0"), 1);
+      this._gauge.setValueAnimated(this._state, 1);
     } else {
-      this._gauge.setValueAnimated(parseInt(this._state ?? "0"), 1);
+      this._gauge.setValueAnimated(this._state, 1);
     }
   }
 
@@ -109,13 +109,23 @@ export class EngaugeCard extends LitElement {
           ${this.renderIcon()}
           <div id="engauge" style=${styleMap(engaugeStyles)}></div>
         </div>
-        <div class="text">
-          <div class="value">
-            ${this._state}
-            <span class="measurement">${this._measurement}</span>
-          </div>
-          <div class="name">${this._name}</div>
-        </div>
+        <engauge-gauge
+          value=${this._state}
+          dialWidth="12"
+          valueWidth="12"
+          dialColor="red"
+          valueColor="blue"
+          size=${this._config.size ?? 100}
+          min="0"
+          max="200"
+          backgroundColor=${this._config.gauge?.backgroundColor ?? "red"}
+        ></engauge-gauge>
+        <engauge-text
+          primaryInfo=${ifDefined(this._state)}
+          secondaryInfo=${ifDefined(this._name)}
+          unit=${ifDefined(this._unit)}
+        >
+        </engauge-text>
       </ha-card>
     `;
   }
@@ -153,33 +163,6 @@ export class EngaugeCard extends LitElement {
 
       svg.gauge {
         height: 100%;
-      }
-
-      .value {
-        font-size: 28px;
-        margin-right: 4px;
-        margin-top: 6px;
-        color: var(--primary-text-color);
-      }
-
-      .measurement {
-        font-size: 18px;
-        color: var(--secondary-text-color);
-      }
-
-      .name {
-        color: var(--secondary-text-color);
-        font-weight: 500;
-        font-size: 16px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        /* margin-top: 2px; */
-      }
-
-      .text {
-        margin-top: 5px;
-        margin-left: 10px;
       }
     `;
   }
