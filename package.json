@@ -14,7 +14,9 @@
     "build": "tsc && vite build",
     "watch": "vite build --mode development --watch",
     "preview": "vite build --mode development --watch & vite preview --host",
-    "ha": "docker run --rm -p 8123:8123 -v ${PWD}/.hass_dev:/config:Z homeassistant/home-assistant:latest"
+    "ha": "docker run --rm -p 8123:8123 -v ${PWD}/.hass_dev:/config:Z homeassistant/home-assistant:latest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "custom-card-helpers": "^1.9.0",
@@ -22,6 +24,10 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-lit": "^1.6.1",
     "typescript": "^4.8.4",
     "vite": "^3.2.3"
   }
