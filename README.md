@@ -35,3 +35,15 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 | `size`       | number  | **Optional** | Size of gauge                                                                                      | 100         |
 | `severity`   | map     | **Optional** | Allows setting of colors for different numbers.                                                    |             |
 | `segments`   | list    | **Optional** | List of colors and their corresponding start values. Segments will override the severity settings. |             |
+
+## Todo
+
+- [x] Update animation from javascript to css
+- [ ] Test all options
+- [ ] Document all options
+- [ ] Create Editor
+- [ ] Color animations
+- [ ] Color overrides for icon and rest based on severity and segments.
+- [ ] Add eslint
+- [x] Add husky
+- [x] Fix all hacs issues github action

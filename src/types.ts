@@ -31,5 +31,8 @@ interface Severity {
 
 interface Segment {
   from: number;
-  color: string;
+  dialColor?: number;
+  valueColor?: string;
+  backgroundColor?: string;
+  iconColor?: string;
 }

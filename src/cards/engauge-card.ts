@@ -27,7 +27,6 @@ export class EngaugeCard extends LitElement {
     const defaultConfig: EngaugeConfig = {
       entity: "number.large_range",
       type: "engauge-card",
-      
     };
 
     this._config = { ...defaultConfig, ...config };
@@ -38,10 +37,10 @@ export class EngaugeCard extends LitElement {
         const ll = l?.slice().sort((a, b) => (a.from > b.from ? -1 : 1));
         for (const i of ll) {
           if (val >= i.from) {
-            return i.color;
+            return i.valueColor ?? "red";
           }
         }
-        return l[0].color;
+        return l[0].valueColor ?? "red";
       };
 
       this._config.gauge = Object.assign({}, this._config.gauge, {
