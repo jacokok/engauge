@@ -1,10 +1,10 @@
 :root {
-    --primary-background-color: #111111;
-    --secondary-background-color: #202020;
-    --primary-color: #3584e4;
-    --primary-text-color: #f8f8f8;
+  --primary-background-color: #111111;
+  --secondary-background-color: #202020;
+  --primary-color: #3584e4;
+  --primary-text-color: #f8f8f8;
 }
 
 html {
-    background-color: var(--secondary-background-color);
+  background-color: var(--secondary-background-color);
 }

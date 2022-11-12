@@ -1,5 +1,5 @@
 import { LitElement, html, css, CSSResultGroup } from "lit";
-import { customElement, property, query } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import { EngaugeConfig } from "../types";
 import { HomeAssistant } from "custom-card-helpers";
 import { styleMap } from "lit-html/directives/style-map.js";
@@ -161,12 +161,6 @@ export class EngaugeCard extends LitElement {
     event.detail = detail || {};
     this.shadowRoot?.dispatchEvent(event);
     return event;
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    "engauge-card": EngaugeCard;
   }
 }
 

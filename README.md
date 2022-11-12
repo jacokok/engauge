@@ -44,6 +44,7 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 - [ ] Create Editor
 - [ ] Color animations
 - [ ] Color overrides for icon and rest based on severity and segments.
-- [ ] Add eslint
-- [x] Add husky
+- [x] Add eslint
+- [x] Add prettier
+- [ ] Add husky
 - [x] Fix all hacs issues github action

@@ -1,6 +1,5 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators.js";
-import { classMap } from "lit/directives/class-map.js";
 
 @customElement("engauge-icon")
 export class EngaugeIcon extends LitElement {
