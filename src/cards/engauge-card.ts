@@ -2,7 +2,6 @@ import { LitElement, html, css, CSSResultGroup } from "lit";
 import { customElement, property, query } from "lit/decorators.js";
 import { EngaugeConfig } from "../types";
 import { HomeAssistant } from "custom-card-helpers";
-import { Gauge } from "../lib/gauge";
 import { styleMap } from "lit-html/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
 
@@ -11,10 +10,7 @@ export class EngaugeCard extends LitElement {
   @property() public hass?: HomeAssistant;
   @property() private _config!: EngaugeConfig;
 
-  @query("#engauge") private _element!: HTMLElement;
-
   private _state: number = 0;
-  private _gauge?: Gauge;
   private _name?: string;
   private _unit?: string;
   private _icon?: string;
@@ -31,20 +27,17 @@ export class EngaugeCard extends LitElement {
     const defaultConfig: EngaugeConfig = {
       entity: "number.large_range",
       type: "engauge-card",
-      horizontal: false,
-      icon: {},
-      level: [],
+      
     };
 
     this._config = { ...defaultConfig, ...config };
 
-    if (this._config.level && this._config.level.length > 0) {
-      const l = this._config.level;
+    if (this._config.segments && this._config.segments.length > 0) {
+      const l = this._config.segments;
       const colorFn = (val: number): string => {
-        const ll = l.slice().sort((a, b) => (a.value > b.value ? -1 : 1));
-
+        const ll = l?.slice().sort((a, b) => (a.from > b.from ? -1 : 1));
         for (const i of ll) {
-          if (val >= i.value) {
+          if (val >= i.from) {
             return i.color;
           }
         }
@@ -65,10 +58,11 @@ export class EngaugeCard extends LitElement {
     const friendly_name = entity?.attributes.friendly_name;
     const unit = entity?.attributes.unit_of_measurement;
     const icon = entity?.attributes.icon;
+
+    this._icon = this._config.icon ?? icon;
     this._state = entity?.state ? +entity.state : 0;
     this._name = this._config.name ?? friendly_name;
     this._unit = this._config.measurement ?? unit;
-    this._icon = this._config.icon?.name ?? icon;
   }
 
   render() {
@@ -82,11 +76,6 @@ export class EngaugeCard extends LitElement {
       textAlign: this._config.horizontal ? "left" : "center",
       flexDirection: this._config.horizontal ? "row" : "column",
       justifyContent: this._config.horizontal ? "start" : "center",
-    };
-
-    let engaugeStyles = {
-      maxWidth: "250px",
-      height: this._config.size ? this._config.size + "px" : "100px",
     };
 
     return html`
@@ -122,9 +111,9 @@ export class EngaugeCard extends LitElement {
     return html`<engauge-icon
       icon=${this._icon ?? "mdi:information-outline"}
       color=${ifDefined(
-        this._config.icon?.color ?? this._config.gauge?.dialColor
+        this._config.iconColor ?? this._config.gauge?.dialColor
       )}
-      size=${ifDefined(this._config.icon?.size)}
+      size=${ifDefined(this._config.iconSize)}
     ></engauge-icon>`;
   }
 

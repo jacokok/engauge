@@ -3,19 +3,24 @@ import { LovelaceCardConfig } from "custom-card-helpers";
 export interface EngaugeConfig extends LovelaceCardConfig {
   entity: string;
   name?: string;
-  unit?: string;
-  icon?: Icon;
-  severity?: Severity;
-  gauge?: GaugeOptions;
   horizontal?: boolean;
+  unit?: string;
+  severity?: Severity;
+  segments?: Array<Segment>;
+  icon?: string;
+  iconColor?: string;
+  iconSize?: string;
+  min?: number;
+  max?: number;
   size?: number;
-  level?: Array<Level>;
-}
-
-interface Icon {
-  name?: string;
-  color?: string;
-  size?: number;
+  dialColor?: string;
+  dialWidth?: number;
+  valueColor?: number;
+  valueWidth?: number;
+  backgroundColor?: number;
+  backgroundRadius?: number;
+  startAngle?: number;
+  animationDuration?: number;
 }
 
 interface Severity {
@@ -24,30 +29,7 @@ interface Severity {
   red: number;
 }
 
-export interface GaugeOptions {
-  startAngle: number;
-  endAngle: number;
-  max: number;
-  min: number;
-  // label: (val: number) => number;
-  backgroundColor: string;
-  dialColor: string;
-  dialWidth: number;
-  dialRounded: boolean;
-  gaugeColor: string;
-  gaugeWidth: number;
-  color?: (val: number) => string;
-}
-
-export interface AnimationOptions {
-  start: number;
-  end: number;
-  duration: number;
-  step: (val: number) => void;
-  easing?: (pos: number) => number;
-}
-
-export interface Level {
-  value: number;
+interface Segment {
+  from: number;
   color: string;
 }
