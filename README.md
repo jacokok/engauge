@@ -20,11 +20,18 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 
 ## Options
 
-| Name     | Type   | Requirement  | Description           | Default     |
-| -------- | ------ | ------------ | --------------------- | ----------- |
-| `type`   | string | **Required** | `custom:engauge-card` |             |
-| `entity` | string | *Required**  | entity_id             |             |
-| `name`   | string | **Optional** | Name                  | From Entity |
-| `unit`   | string | **Optional** | The unit of measure   | From Entity |
-| `min`    | string | **Optional** | Minimum gauge value   | 0           |
-| `max`    | string | **Optional** | Minimum gauge value   | 100         |
+| Name         | Type    | Requirement  | Description                                                                                        | Default     |
+| ------------ | ------- | ------------ | -------------------------------------------------------------------------------------------------- | ----------- |
+| `type`       | string  | **Required** | `custom:engauge-card`                                                                              |             |
+| `entity`     | string  | **Required** | entity_id                                                                                          |             |
+| `name`       | string  | **Optional** | Name                                                                                               | From Entity |
+| `horizontal` | boolean | **Optional** | Horizontal layout                                                                                  | false       |
+| `unit`       | string  | **Optional** | The unit of measure                                                                                | From Entity |
+| `icon`       | string  | **Optional** | mdi:icon                                                                                           | From Entity |
+| `iconColor`  | string  | **Optional** | Icon color. Severity or segment will override this                                                 |             |
+| `iconSize`   | number  | **Optional** | Icon size                                                                                          |             |
+| `min`        | number  | **Optional** | Minimum gauge value                                                                                | 0           |
+| `max`        | number  | **Optional** | Maximum gauge value                                                                                | 100         |
+| `size`       | number  | **Optional** | Size of gauge                                                                                      | 100         |
+| `severity`   | map     | **Optional** | Allows setting of colors for different numbers.                                                    |             |
+| `segments`   | list    | **Optional** | List of colors and their corresponding start values. Segments will override the severity settings. |             |
