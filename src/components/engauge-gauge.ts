@@ -1,6 +1,5 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement, query } from "lit/decorators.js";
-import { AnimationOptions } from "../types";
 import { styleMap } from "lit-html/directives/style-map.js";
 
 @customElement("engauge-gauge")
@@ -14,30 +13,23 @@ export class EngaugeGauge extends LitElement {
   @property() public dialColor: string = "var(--primary-background-color)";
   @property() public valueColor: string = "var(--primary-color)";
   @property() public backgroundColor: string = "none";
+  @property() public startAngle: number = 270;
+  @property() public animationDuration: number = 0.7;
 
-  @query("svg path#value") private valueElement?: HTMLElement;
+  @query("svg circle#value") private valueElement?: SVGGeometryElement;
 
   private oldValue: number = 0;
-  private radius: number = 40;
-  private startAngle: number = 271;
-  private endAngle: number = 270;
-  private animationDuration: number = 1;
-  private requestAnimationFrame = window.requestAnimationFrame;
 
   firstUpdated() {
-    this.setValueAnim();
+    this.updateGaugeAnimated();
   }
 
   protected render(): TemplateResult {
-    const gaugeStyles = {
-      maxWidth: "250px",
-      height: this.size + "px",
-    };
-    this.setValueAnim();
+    this.updateGaugeAnimated();
     return html` <svg
       viewBox="0 0 100 100"
       class="gauge"
-      style=${styleMap(gaugeStyles)}
+      style=${this.gaugeStyles()}
     >
       <circle
         fill=${this.backgroundColor}
@@ -45,190 +37,112 @@ export class EngaugeGauge extends LitElement {
         stroke="none"
         cx="50"
         cy="50"
-        r="30"
+        r="40"
+        style=${this.backgroundCircleStyles()}
       ></circle>
-      <path
-        class="dial"
+      <circle
         fill="none"
+        class="dial"
         stroke=${this.dialColor}
         stroke-width=${this.dialWidth}
         stroke-linecap="round"
-        d=${this.pathString(this.radius, this.startAngle, this.endAngle)}
-      ></path>
-      <path
+        cx="50"
+        cy="50"
+        r="40"
+        style=${this.dialCircleStyles()}
+      ></circle>
+      <circle
         id="value"
         class="value"
         fill="none"
         stroke=${this.valueColor}
-        stroke-linecap="round"
         stroke-width=${this.valueWidth}
-        d=""
-        style="transition: stroke 1000ms ease 0s;"
-      ></path>
+        stroke-linecap="round"
+        stroke-dasharray="251 251"
+        stroke-dashoffset="251"
+        cx="50"
+        cy="50"
+        r="40"
+        style=${this.valueCircleStyles()}
+      ></circle>
     </svg>`;
   }
 
   static get styles(): CSSResultGroup {
     return css`
-      /* :host {
-        max-width: 250px;
-        height: 100px;
-      } */
       svg.gauge {
         height: 100%;
       }
     `;
   }
 
-  private dynamicStyles() {
+  private gaugeStyles() {
     const gaugeStyles = {
       maxWidth: "250px",
       height: this.size + "px",
     };
+    return styleMap(gaugeStyles);
   }
 
-  private getAngle(percentage: number, gaugeSpanAngle: number) {
-    return (percentage * gaugeSpanAngle) / 100;
+  private backgroundCircleStyles() {
+    const styles = {
+      transition: `fill ${this.animationDuration}s ease`,
+    };
+    return styleMap(styles);
   }
 
-  private normalizeAnim(value: number, min: number, limit: number) {
-    var val = Number(value);
-    if (val > limit) return limit;
-    if (val < min) return min;
-    return val;
+  private dialCircleStyles() {
+    const styles = {
+      transition: `fill ${this.animationDuration}s ease`,
+    };
+    return styleMap(styles);
+  }
+
+  private valueCircleStyles() {
+    const styles = {
+      transition: `fill ${this.animationDuration}s ease`,
+      transformOrigin: "center",
+      transform: `rotate(${this.startAngle}deg)`,
+    };
+    return styleMap(styles);
   }
 
   private getValueInPercentage(value: number, min: number, max: number) {
-    var newMax = max - min,
+    const newMax = max - min,
       newVal = value - min;
-    return (100 * newVal) / newMax;
+    const result = (100 * newVal) / newMax;
+    return result > 100 ? 100 : result;
   }
 
-  private getCartesian(cx: number, cy: number, radius: number, angle: number) {
-    var rad = (angle * Math.PI) / 180;
-    return {
-      x: Math.round((cx + radius * Math.cos(rad)) * 1000) / 1000,
-      y: Math.round((cy + radius * Math.sin(rad)) * 1000) / 1000,
-    };
-  }
-
-  private getDialCoords(radius: number, startAngle: number, endAngle: number) {
-    var cx = 50,
-      cy = 50;
-    return {
-      end: this.getCartesian(cx, cy, radius, endAngle),
-      start: this.getCartesian(cx, cy, radius, startAngle),
-    };
-  }
-
-  private pathString(
-    radius: number,
-    startAngle: number,
-    endAngle: number,
-    largeArc?: number
-  ) {
-    const coords = this.getDialCoords(radius, startAngle, endAngle),
-      start = coords.start,
-      end = coords.end,
-      largeArcFlag = typeof largeArc === "undefined" ? 1 : largeArc;
-
-    return [
-      "M",
-      start.x,
-      start.y,
-      "A",
-      radius,
-      radius,
-      0,
-      largeArcFlag,
-      1,
-      end.x,
-      end.y,
-    ].join(" ");
-  }
-
-  private updateGauge(theValue: number) {
-    const val = this.getValueInPercentage(theValue, this.min, this.max);
-    const angle = this.getAngle(
-      val,
-      360 - Math.abs(this.startAngle - this.endAngle)
+  private updateGaugeAnimated() {
+    if (!this.valueElement) return;
+    const fromPercentage = this.getValueInPercentage(
+      this.oldValue,
+      this.min,
+      this.max
     );
-    const flag = angle <= 180 ? 0 : 1;
+    const toPercentage = this.getValueInPercentage(
+      this.value,
+      this.min,
+      this.max
+    );
+    const length = this.valueElement.getTotalLength();
+    const newFromPercentage = (length / 100) * fromPercentage;
+    const newToPercentage = (length / 100) * toPercentage;
 
-    if (this.valueElement) {
-      this.valueElement.setAttribute(
-        "d",
-        this.pathString(
-          this.radius,
-          this.startAngle,
-          angle + this.startAngle,
-          flag
-        )
-      );
-    }
-  }
+    this.valueElement.style.transition = this.valueElement.style.transition =
+      "none";
+    this.valueElement.style.strokeDasharray = length + " " + length;
+    this.valueElement.style.strokeDashoffset = (
+      length - newFromPercentage
+    ).toString();
 
-  private setGaugeColor(color: string) {
-    console.log(color);
-  }
+    this.valueElement.getBoundingClientRect();
 
-  public setValue() {
-    const value = this.normalizeAnim(this.value, this.min, this.max);
+    this.valueElement.style.transition = `stroke-dashoffset ${this.animationDuration}s ease-in-out`;
+    this.valueElement.style.strokeDashoffset = (
+      length - newToPercentage
+    ).toString();
     this.oldValue = this.value;
-    this.value = value;
-    // this.setGaugeColor(value, 0);
-    this.updateGauge(value);
-  }
-
-  public setValueAnim() {
-    const value = this.normalizeAnim(this.value, this.min, this.max);
-    if (this.value === this.oldValue) {
-      return;
-    }
-
-    // this.setGaugeColor(value, this.animationDuration);
-    const step = (val: number) => {
-      this.updateGauge(val);
-    };
-
-    this.anim({
-      start: this.oldValue,
-      end: value,
-      duration: this.animationDuration,
-      step: step,
-    });
-    this.oldValue = this.value;
-  }
-
-  private anim(options: AnimationOptions) {
-    let currentIteration = 1;
-    const duration = options.duration,
-      iterations = 60 * duration,
-      start = options.start || 0,
-      end = options.end,
-      change = end - start,
-      step = options.step,
-      easing =
-        options.easing ||
-        function easeInOutCubic(pos: number) {
-          // https://github.com/danro/easing-js/blob/master/easing.js
-          if ((pos /= 0.5) < 1) return 0.5 * Math.pow(pos, 3);
-          return 0.5 * (Math.pow(pos - 2, 3) + 2);
-        };
-
-    const requestAnimationFrame = this.requestAnimationFrame;
-
-    function animate() {
-      var progress = currentIteration / iterations,
-        value = change * easing(progress) + start;
-      step(value);
-      currentIteration += 1;
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    }
-    // start!
-    requestAnimationFrame(animate);
   }
 }

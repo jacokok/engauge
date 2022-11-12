@@ -56,10 +56,10 @@ export class EngaugeCard extends LitElement {
       });
     }
 
-    this.createGauge(true);
+    this.initGauge();
   }
 
-  private createGauge(forceReload?: boolean) {
+  private initGauge() {
     const entityId = this._config?.entity;
     const entity = this.hass?.states[entityId!];
     const friendly_name = entity?.attributes.friendly_name;
@@ -69,20 +69,6 @@ export class EngaugeCard extends LitElement {
     this._name = this._config.name ?? friendly_name;
     this._unit = this._config.measurement ?? unit;
     this._icon = this._config.icon?.name ?? icon;
-
-    if (!this._element) {
-      return;
-    }
-    if (forceReload) {
-      this._gauge = new Gauge(this._element, this._config.gauge ?? {});
-    }
-
-    if (!this._gauge) {
-      this._gauge = new Gauge(this._element, this._config.gauge ?? {});
-      this._gauge.setValueAnimated(this._state, 1);
-    } else {
-      this._gauge.setValueAnimated(this._state, 1);
-    }
   }
 
   render() {
@@ -90,7 +76,7 @@ export class EngaugeCard extends LitElement {
       return html`<div>Error</div>`;
     }
 
-    this.createGauge();
+    this.initGauge();
 
     let styles = {
       textAlign: this._config.horizontal ? "left" : "center",
@@ -106,20 +92,8 @@ export class EngaugeCard extends LitElement {
     return html`
       <ha-card @click=${this.clickHandler} style=${styleMap(styles)}>
         <div class="gauge-container">
-          ${this.renderIcon()}
-          <div id="engauge" style=${styleMap(engaugeStyles)}></div>
+          ${this.renderIcon()} ${this.renderGauge()}
         </div>
-        <engauge-gauge
-          value=${this._state}
-          dialWidth="12"
-          valueWidth="12"
-          dialColor="red"
-          valueColor="blue"
-          size=${this._config.size ?? 100}
-          min="0"
-          max="200"
-          backgroundColor=${this._config.gauge?.backgroundColor ?? "red"}
-        ></engauge-gauge>
         <engauge-text
           primaryInfo=${ifDefined(this._state)}
           secondaryInfo=${ifDefined(this._name)}
@@ -127,6 +101,20 @@ export class EngaugeCard extends LitElement {
         >
         </engauge-text>
       </ha-card>
+    `;
+  }
+
+  renderGauge() {
+    return html`
+      <engauge-gauge
+        value=${this._state}
+        dialWidth="12"
+        valueWidth="12"
+        size=${this._config.size ?? 100}
+        min=${0}
+        max=${this._config.gauge?.max ?? 100}
+        backgroundColor=${ifDefined(this._config.gauge?.backgroundColor)}
+      ></engauge-gauge>
     `;
   }
 
@@ -168,7 +156,7 @@ export class EngaugeCard extends LitElement {
   }
 
   protected updated() {
-    this.createGauge();
+    this.initGauge();
   }
 
   clickHandler() {
