@@ -131,8 +131,6 @@ export class EngaugeGauge extends LitElement {
     const newFromPercentage = (length / 100) * fromPercentage;
     const newToPercentage = (length / 100) * toPercentage;
 
-    console.log("updated animated", newFromPercentage, newToPercentage);
-
     this.valueElement.style.transition = this.valueElement.style.transition =
       "none";
     this.valueElement.style.strokeDasharray = length + " " + length;
