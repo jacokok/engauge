@@ -13,8 +13,10 @@ export class EngaugeGauge extends LitElement {
   @property() public dialColor: string = "var(--primary-background-color)";
   @property() public valueColor: string = "var(--primary-color)";
   @property() public backgroundColor: string = "none";
+  @property() public backgroundRadius: number = 40;
   @property() public startAngle: number = 270;
   @property() public animationDuration: number = 0.7;
+  @property() public rounded: boolean = true;
 
   @query("svg circle#value") private valueElement?: SVGGeometryElement;
 
@@ -37,7 +39,7 @@ export class EngaugeGauge extends LitElement {
         stroke="none"
         cx="50"
         cy="50"
-        r="40"
+        r=${this.backgroundRadius}
         style=${this.backgroundCircleStyles()}
       ></circle>
       <circle
@@ -45,7 +47,6 @@ export class EngaugeGauge extends LitElement {
         class="dial"
         stroke=${this.dialColor}
         stroke-width=${this.dialWidth}
-        stroke-linecap="round"
         cx="50"
         cy="50"
         r="40"
@@ -57,7 +58,6 @@ export class EngaugeGauge extends LitElement {
         fill="none"
         stroke=${this.valueColor}
         stroke-width=${this.valueWidth}
-        stroke-linecap="round"
         stroke-dasharray="251 251"
         stroke-dashoffset="251"
         cx="50"
@@ -103,6 +103,9 @@ export class EngaugeGauge extends LitElement {
       transition: `fill ${this.animationDuration}s ease`,
       transformOrigin: "center",
       transform: `rotate(${this.startAngle}deg)`,
+      // strokeLinecap: "round",
+      strokeLinecap: this.rounded ? "round" : "unset",
+      // strokeLinecap: `${this.rounded} ? "round" : "unset"`,
     };
     return styleMap(styles);
   }

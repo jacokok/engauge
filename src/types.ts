@@ -5,8 +5,6 @@ export interface EngaugeConfig extends LovelaceCardConfig {
   name?: string;
   horizontal?: boolean;
   unit?: string;
-  severity?: Severity;
-  segments?: Array<Segment>;
   icon?: string;
   iconColor?: string;
   iconSize?: string;
@@ -21,6 +19,10 @@ export interface EngaugeConfig extends LovelaceCardConfig {
   backgroundRadius?: number;
   startAngle?: number;
   animationDuration?: number;
+  rounded?: boolean;
+  hideText?: boolean;
+  severity?: Severity;
+  segments?: Array<Segment>;
 }
 
 interface Severity {

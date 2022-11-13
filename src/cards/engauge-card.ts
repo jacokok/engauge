@@ -61,7 +61,7 @@ export class EngaugeCard extends LitElement {
     this._icon = this._config.icon ?? icon;
     this._state = entity?.state ? +entity.state : 0;
     this._name = this._config.name ?? friendly_name;
-    this._unit = this._config.measurement ?? unit;
+    this._unit = this._config.unit ?? unit;
   }
 
   render() {
@@ -82,13 +82,20 @@ export class EngaugeCard extends LitElement {
         <div class="gauge-container">
           ${this.renderIcon()} ${this.renderGauge()}
         </div>
-        <engauge-text
-          primaryInfo=${ifDefined(this._state)}
-          secondaryInfo=${ifDefined(this._name)}
-          unit=${ifDefined(this._unit)}
-        >
-        </engauge-text>
+        ${this.renderText()}
       </ha-card>
+    `;
+  }
+
+  renderText() {
+    if (this._config.hideText) return;
+    return html`
+      <engauge-text
+        primaryInfo=${ifDefined(this._state)}
+        secondaryInfo=${ifDefined(this._name)}
+        unit=${ifDefined(this._unit)}
+      >
+      </engauge-text>
     `;
   }
 
@@ -96,12 +103,18 @@ export class EngaugeCard extends LitElement {
     return html`
       <engauge-gauge
         value=${this._state}
-        dialWidth="12"
-        valueWidth="12"
         size=${this._config.size ?? 100}
-        min=${0}
-        max=${this._config.gauge?.max ?? 100}
-        backgroundColor=${ifDefined(this._config.gauge?.backgroundColor)}
+        dialWidth=${this._config.dialWidth ?? 12}
+        valueWidth=${this._config.valueWidth ?? 12}
+        min=${this._config.min ?? 0}
+        max=${this._config.max ?? 100}
+        dialColor=${ifDefined(this._config.dialColor)}
+        valueColor=${ifDefined(this._config.valueColor)}
+        backgroundColor=${ifDefined(this._config.backgroundColor)}
+        backgroundRadius=${ifDefined(this._config.backgroundRadius)}
+        startAngle=${this._config.startAngle ?? 270}
+        animationDuration=${this._config.animationDuration ?? 0.7}
+        rounded=${this._config.rounded ?? true}
       ></engauge-gauge>
     `;
   }
