@@ -10,13 +10,7 @@ Enguage is a circular gauge with icon card. The goal is to be a hot replacement 
 
 ### HACS
 
-Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
-
-1. Install HACS if you don't have it already
-2. Open HACS in Home Assistant
-3. Go to "Frontend" section
-4. Click button with "+" icon
-5. Search for "Mushroom"
+Update hacs instructions...
 
 ### Preview
 
@@ -50,18 +44,24 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 | `severity`          | map     | **Optional** | Allows setting of colors for different numbers.               |                                 |
 | `segments`          | list    | **Optional** | List of colors and start values. Segments will override this. |                                 |
 
-## Todo
+### Severity
 
-- [x] Update animation from javascript to css
-- [ ] Test all options
-- [ ] Document all options
-- [ ] Create Editor
-- [ ] Color animations
-- [ ] Color overrides for icon and rest based on severity and segments.
-- [x] Add eslint
-- [x] Add prettier
-- [ ] Add husky
-- [x] Fix all hacs issues github action
+| Name     | Type   | Requirement  | Description                            |
+| -------- | ------ | ------------ | -------------------------------------- |
+| `green`  | number | **Required** | Value from which to start green color  |
+| `yellow` | number | **Required** | Value from which to start yellow color |
+| `red`    | number | **Required** | Value from which to start red color    |
+
+### Segments
+
+| Name              | Type   | Requirement  | Description                         |
+| ----------------- | ------ | ------------ | ----------------------------------- |
+| `from`            | number | **Required** | Value from which to start the color |
+| `dialColor`       | number | **Optional** | Color of dial                       |
+| `valueColor`      | number | **Optional** | Color of value                      |
+| `backgroundColor` | number | **Optional** | Background Color                    |
+| `icon`            | number | **Optional** | mdi:icon                            |
+| `iconColor`       | number | **Optional** | Icon color                          |
 
 [releases-shield]: https://img.shields.io/github/v/release/jacokok/engauge.svg?style=for-the-badge
 [releases]: https://github.com/jacokok/engauge/releases
