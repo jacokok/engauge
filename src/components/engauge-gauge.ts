@@ -93,19 +93,17 @@ export class EngaugeGauge extends LitElement {
 
   private dialCircleStyles() {
     const styles = {
-      transition: `fill ${this.animationDuration}s ease`,
+      transition: `stroke ${this.animationDuration}s ease`,
     };
     return styleMap(styles);
   }
 
   private valueCircleStyles() {
     const styles = {
-      transition: `fill ${this.animationDuration}s ease`,
+      transition: `stroke-dashoffset ${this.animationDuration}s, stroke ${this.animationDuration}s 0s`,
       transformOrigin: "center",
       transform: `rotate(${this.startAngle}deg)`,
-      // strokeLinecap: "round",
       strokeLinecap: this.rounded ? "round" : "unset",
-      // strokeLinecap: `${this.rounded} ? "round" : "unset"`,
     };
     return styleMap(styles);
   }
@@ -132,6 +130,8 @@ export class EngaugeGauge extends LitElement {
     const length = this.valueElement.getTotalLength();
     const newFromPercentage = (length / 100) * fromPercentage;
     const newToPercentage = (length / 100) * toPercentage;
+
+    console.log("updated animated", newFromPercentage, newToPercentage);
 
     this.valueElement.style.transition = this.valueElement.style.transition =
       "none";

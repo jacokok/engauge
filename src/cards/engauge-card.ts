@@ -1,6 +1,6 @@
 import { LitElement, html, css, CSSResultGroup } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { EngaugeConfig } from "../types";
+import { EngaugeConfig, Segment } from "../types";
 import { HomeAssistant } from "custom-card-helpers";
 import { styleMap } from "lit-html/directives/style-map.js";
 import { ifDefined } from "lit/directives/if-defined.js";
@@ -14,6 +14,11 @@ export class EngaugeCard extends LitElement {
   private _name?: string;
   private _unit?: string;
   private _icon?: string;
+  private _iconColor?: string;
+
+  private _dialColor?: string;
+  private _valueColor?: string;
+  private _backgroundColor?: string;
 
   static getStubConfig() {
     return {};
@@ -23,31 +28,12 @@ export class EngaugeCard extends LitElement {
     if (!config) {
       throw new Error("No configuration.");
     }
-
     const defaultConfig: EngaugeConfig = {
-      entity: "number.large_range",
+      entity: "",
       type: "engauge-card",
     };
 
     this._config = { ...defaultConfig, ...config };
-
-    if (this._config.segments && this._config.segments.length > 0) {
-      const l = this._config.segments;
-      const colorFn = (val: number): string => {
-        const ll = l?.slice().sort((a, b) => (a.from > b.from ? -1 : 1));
-        for (const i of ll) {
-          if (val >= i.from) {
-            return i.valueColor ?? "red";
-          }
-        }
-        return l[0].valueColor ?? "red";
-      };
-
-      this._config.gauge = Object.assign({}, this._config.gauge, {
-        color: colorFn,
-      });
-    }
-
     this.initGauge();
   }
 
@@ -62,6 +48,65 @@ export class EngaugeCard extends LitElement {
     this._state = entity?.state ? +entity.state : 0;
     this._name = this._config.name ?? friendly_name;
     this._unit = this._config.unit ?? unit;
+    this._dialColor = this._config.dialColor;
+    this._valueColor = this._config.valueColor;
+    this._backgroundColor = this._config.backgroundColor;
+    this._iconColor = this._config.iconColor ?? this._config?.dialColor;
+
+    this.initColors();
+  }
+
+  private initColors() {
+    if (this._config.segments) {
+      this.segments(this._config.segments);
+    } else if (this._config.severity) {
+      this.severity();
+    }
+  }
+
+  private severity() {
+    if (this._config.severity) {
+      const segments: Array<Segment> = [];
+      segments.push({
+        from: this._config.severity?.green,
+        valueColor: "var(--success-color)",
+        iconColor: "var(--success-color)",
+      });
+      segments.push({
+        from: this._config.severity?.yellow,
+        valueColor: "var(--warning-color)",
+        iconColor: "var(--warning-color)",
+      });
+      segments.push({
+        from: this._config.severity?.red,
+        valueColor: "var(--error-color)",
+        iconColor: "var(--error-color)",
+      });
+      this.segments(segments);
+    }
+  }
+  private segments(segments: Array<Segment>) {
+    const sortedSegments = segments
+      .slice()
+      .sort((a, b) => (a.from > b.from ? 1 : -1));
+    let isSet = false;
+    for (const segment of sortedSegments) {
+      if (this._state >= segment.from) {
+        this.setSegmentColors(segment);
+        isSet = true;
+      }
+    }
+    if (!isSet) {
+      this.setSegmentColors(sortedSegments[0]);
+    }
+  }
+
+  private setSegmentColors(segment: Segment) {
+    this._dialColor = segment.dialColor ?? this._dialColor;
+    this._valueColor = segment.valueColor ?? this._valueColor;
+    this._backgroundColor = segment.backgroundColor ?? this._backgroundColor;
+    this._icon = segment.icon ?? this._icon;
+    this._iconColor = segment.iconColor ?? this._iconColor;
   }
 
   render() {
@@ -108,9 +153,9 @@ export class EngaugeCard extends LitElement {
         valueWidth=${this._config.valueWidth ?? 12}
         min=${this._config.min ?? 0}
         max=${this._config.max ?? 100}
-        dialColor=${ifDefined(this._config.dialColor)}
-        valueColor=${ifDefined(this._config.valueColor)}
-        backgroundColor=${ifDefined(this._config.backgroundColor)}
+        dialColor=${ifDefined(this._dialColor)}
+        valueColor=${ifDefined(this._valueColor)}
+        backgroundColor=${ifDefined(this._backgroundColor)}
         backgroundRadius=${ifDefined(this._config.backgroundRadius)}
         startAngle=${this._config.startAngle ?? 270}
         animationDuration=${this._config.animationDuration ?? 0.7}
@@ -121,10 +166,8 @@ export class EngaugeCard extends LitElement {
 
   renderIcon() {
     return html`<engauge-icon
-      icon=${this._icon ?? "mdi:information-outline"}
-      color=${ifDefined(
-        this._config.iconColor ?? this._config.gauge?.dialColor
-      )}
+      icon=${ifDefined(this._icon)}
+      color=${ifDefined(this._iconColor)}
       size=${ifDefined(this._config.iconSize)}
     ></engauge-icon>`;
   }

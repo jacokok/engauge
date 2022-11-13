@@ -1,6 +1,7 @@
-import { LovelaceCardConfig } from "custom-card-helpers";
+// import { LovelaceCardConfig } from "custom-card-helpers";
 
-export interface EngaugeConfig extends LovelaceCardConfig {
+export interface EngaugeConfig {
+  type: string;
   entity: string;
   name?: string;
   horizontal?: boolean;
@@ -13,9 +14,9 @@ export interface EngaugeConfig extends LovelaceCardConfig {
   size?: number;
   dialColor?: string;
   dialWidth?: number;
-  valueColor?: number;
+  valueColor?: string;
   valueWidth?: number;
-  backgroundColor?: number;
+  backgroundColor?: string;
   backgroundRadius?: number;
   startAngle?: number;
   animationDuration?: number;
@@ -31,10 +32,11 @@ interface Severity {
   red: number;
 }
 
-interface Segment {
+export interface Segment {
   from: number;
-  dialColor?: number;
+  dialColor?: string;
   valueColor?: string;
   backgroundColor?: string;
+  icon?: string;
   iconColor?: string;
 }
