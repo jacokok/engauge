@@ -1,6 +1,10 @@
 # Engauge
 
-Enguage is an icon gauge card. It is like a entity and gauge card in one.
+[![GitHub Release][releases-shield]][releases]
+[![License][license-shield]](LICENSE)
+[![Build][build-shield]][build]
+
+Enguage is a circular gauge with icon card. The goal is to be a hot replacement for the build in gauge but with extra options and an icon.
 
 ## Installation
 
@@ -48,3 +52,9 @@ Mushroom is available in [HACS][hacs] (Home Assistant Community Store).
 - [x] Add prettier
 - [ ] Add husky
 - [x] Fix all hacs issues github action
+
+[releases-shield]: https://img.shields.io/github/v/release/jacokok/engauge.svg?style=for-the-badge
+[releases]: https://github.com/jacokok/engauge/releases
+[license-shield]: https://img.shields.io/github/license/jacokok/engauge.svg?style=for-the-badge
+[build]: https://github.com/jacokok/engauge/actions/workflows/build.yml
+[build-shield]: https://img.shields.io/github/workflow/status/jacokok/engauge/Build?style=for-the-badge
