@@ -4,17 +4,15 @@
 [![License][license-shield]](LICENSE)
 [![Build][build-shield]][build]
 
-Enguage is a circular gauge with icon card. The goal is to be a hot replacement for the build in gauge but with extra options and an icon.
+Enguage is a circular gauge with icon card. The goal is to be a (almost) hot replacement for the build in gauge but with extra options and an icon.
 
 ## Installation
 
-### HACS
-
-Update hacs instructions...
+Add this custom repository in HACS and install.
 
 ### Preview
 
-![preview](images/preview.svg)
+![preview](images/preview.png)
 
 ## Options
 
@@ -76,6 +74,11 @@ Update hacs instructions...
 - [Small Start Angle](examples/SmallStartAngle.yaml)
 - [Value Width](examples/ValueWidth.yaml)
 - [Width](examples/Width.yaml)
+
+## Notes
+
+- This is considered still in beta and testing. Want to get this tested and released as stable.
+- With the stable release I plan on adding editor UI to change config.
 
 [releases-shield]: https://img.shields.io/github/v/release/jacokok/engauge.svg?style=for-the-badge
 [releases]: https://github.com/jacokok/engauge/releases
