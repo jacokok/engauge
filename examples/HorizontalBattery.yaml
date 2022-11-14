@@ -1,0 +1,50 @@
+type: custom:engauge-card
+entity: input_number.slider1
+horizontal: true
+name: Horizontal + Battery
+icon: mdi:battery
+segments:
+  - from: 100
+    valueColor: var(--success-color)
+    iconColor: var(--success-color)
+    icon: mdi:battery
+  - from: 90
+    valueColor: var(--primary-color)
+    iconColor: var(--primary-color)
+    icon: mdi:battery-90
+  - from: 80
+    valueColor: var(--warning-color)
+    iconColor: var(--warning-color)
+    icon: mdi:battery-80
+  - from: 70
+    valueColor: var(--warning-color)
+    iconColor: var(--warning-color)
+    icon: mdi:battery-70
+  - from: 60
+    valueColor: var(--warning-color)
+    iconColor: var(--warning-color)
+    icon: mdi:battery-60
+  - from: 50
+    valueColor: var(--warning-color)
+    iconColor: var(--warning-color)
+    icon: mdi:battery-50
+  - from: 40
+    valueColor: var(--error-color)
+    iconColor: var(--error-color)
+    icon: mdi:battery-40
+  - from: 30
+    valueColor: var(--error-color)
+    iconColor: var(--error-color)
+    icon: mdi:battery-30
+  - from: 20
+    valueColor: var(--error-color)
+    iconColor: var(--error-color)
+    icon: mdi:battery-20
+  - from: 10
+    valueColor: var(--error-color)
+    iconColor: var(--error-color)
+    icon: mdi:battery-10
+  - from: 0
+    valueColor: var(--error-color)
+    iconColor: var(--error-color)
+    icon: mdi:battery-remove-outline

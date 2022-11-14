@@ -1,0 +1,7 @@
+type: custom:engauge-card
+entity: input_number.slider1
+backgroundColor: var(--primary-color)
+backgroundRadius: 30
+iconColor: var(--secondary-background-color)
+dialColor: none
+name: No Background

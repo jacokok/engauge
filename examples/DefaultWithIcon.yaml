@@ -1,0 +1,4 @@
+type: custom:engauge-card
+entity: input_number.slider1
+icon: mdi:gauge-full
+name: Default With Icon

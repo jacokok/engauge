@@ -1,0 +1,4 @@
+type: custom:engauge-card
+entity: input_number.slider1
+name: Width
+dialWidth: 2

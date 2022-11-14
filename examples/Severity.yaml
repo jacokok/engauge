@@ -1,0 +1,8 @@
+type: custom:engauge-card
+entity: input_number.slider1
+icon: mdi:information
+name: Severity
+severity:
+  green: 0
+  yellow: 40
+  red: 60

@@ -63,6 +63,20 @@ Update hacs instructions...
 | `icon`            | number | **Optional** | mdi:icon                            |
 | `iconColor`       | number | **Optional** | Icon color                          |
 
+## Examples
+
+![preview](examples/example.gif)
+
+- [Default With Icon](examples/DefaultWithIcon.yaml)
+- [Horizontal Battery](examples/HorizontalBattery.yaml)
+- [No Background](examples/NoBackground.yaml)
+- [Not Rounded](examples/NotRounded.yaml)
+- [Segments Custom Icon](examples/SegmentsCustomIcon.yaml)
+- [Severity](examples/Severity.yaml)
+- [Small Start Angle](examples/SmallStartAngle.yaml)
+- [Value Width](examples/ValueWidth.yaml)
+- [Width](examples/Width.yaml)
+
 [releases-shield]: https://img.shields.io/github/v/release/jacokok/engauge.svg?style=for-the-badge
 [releases]: https://github.com/jacokok/engauge/releases
 [license-shield]: https://img.shields.io/github/license/jacokok/engauge.svg?style=for-the-badge

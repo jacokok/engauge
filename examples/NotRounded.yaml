@@ -1,0 +1,4 @@
+type: custom:engauge-card
+entity: input_number.slider1
+rounded: false
+name: Not Rounded

@@ -1,0 +1,5 @@
+type: custom:engauge-card
+entity: input_number.slider1
+valueWidth: 2
+icon: mdi:table-column-width
+name: Value Width

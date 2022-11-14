@@ -1,0 +1,16 @@
+type: custom:engauge-card
+entity: input_number.slider1
+name: Segments Custom Icon
+segments:
+  - from: 0
+    valueColor: var(--success-color)
+    iconColor: var(--success-color)
+    icon: mdi:cards-club
+  - from: 40
+    valueColor: var(--warning-color)
+    iconColor: var(--warning-color)
+    icon: mdi:cards-diamond
+  - from: 60
+    valueColor: var(--error-color)
+    iconColor: var(--error-color)
+    icon: mdi:cards-heart
