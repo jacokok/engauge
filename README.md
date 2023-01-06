@@ -82,6 +82,7 @@ Add this custom repository in HACS and install.
 
 [releases-shield]: https://img.shields.io/github/v/release/jacokok/engauge.svg?style=for-the-badge
 [releases]: https://github.com/jacokok/engauge/releases
+[license]: https://img.shields.io/github/license/jacokok/engauge.svg?style=for-the-badge
 [license-shield]: https://img.shields.io/github/license/jacokok/engauge.svg?style=for-the-badge
 [build]: https://github.com/jacokok/engauge/actions/workflows/build.yml
-[build-shield]: https://img.shields.io/github/workflow/status/jacokok/engauge/Build?style=for-the-badge
+[build-shield]: https://img.shields.io/github/actions/workflow/status/jacokok/engauge/build.yml?branch=main&style=for-the-badge
