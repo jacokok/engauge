@@ -28,44 +28,45 @@ export class EngaugeGauge extends LitElement {
 
   protected render(): TemplateResult {
     this.updateGaugeAnimated();
-    return html` <svg
-      viewBox="0 0 100 100"
-      class="gauge"
-      style=${this.gaugeStyles()}
-    >
-      <circle
-        fill=${this.backgroundColor}
-        class="background"
-        stroke="none"
-        cx="50"
-        cy="50"
-        r=${this.backgroundRadius}
-        style=${this.backgroundCircleStyles()}
-      ></circle>
-      <circle
-        fill="none"
-        class="dial"
-        stroke=${this.dialColor}
-        stroke-width=${this.dialWidth}
-        cx="50"
-        cy="50"
-        r="40"
-        style=${this.dialCircleStyles()}
-      ></circle>
-      <circle
-        id="value"
-        class="value"
-        fill="none"
-        stroke=${this.valueColor}
-        stroke-width=${this.valueWidth}
-        stroke-dasharray="251 251"
-        stroke-dashoffset="251"
-        cx="50"
-        cy="50"
-        r="40"
-        style=${this.valueCircleStyles()}
-      ></circle>
-    </svg>`;
+    return html` <style>
+        :host {
+          height: ${this.size}px;
+        }
+      </style>
+      <svg viewBox="0 0 100 100" class="gauge" style=${this.gaugeStyles()}>
+        <circle
+          fill=${this.backgroundColor}
+          class="background"
+          stroke="none"
+          cx="50"
+          cy="50"
+          r=${this.backgroundRadius}
+          style=${this.backgroundCircleStyles()}
+        ></circle>
+        <circle
+          fill="none"
+          class="dial"
+          stroke=${this.dialColor}
+          stroke-width=${this.dialWidth}
+          cx="50"
+          cy="50"
+          r="40"
+          style=${this.dialCircleStyles()}
+        ></circle>
+        <circle
+          id="value"
+          class="value"
+          fill="none"
+          stroke=${this.valueColor}
+          stroke-width=${this.valueWidth}
+          stroke-dasharray="251 251"
+          stroke-dashoffset="251"
+          cx="50"
+          cy="50"
+          r="40"
+          style=${this.valueCircleStyles()}
+        ></circle>
+      </svg>`;
   }
 
   static get styles(): CSSResultGroup {
