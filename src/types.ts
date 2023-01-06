@@ -22,6 +22,9 @@ export interface EngaugeConfig {
   animationDuration?: number;
   rounded?: boolean;
   hideText?: boolean;
+  primaryFontSize?: number;
+  secondaryFontSize?: number;
+  unitFontSize?: number;
   severity?: Severity;
   segments?: Array<Segment>;
 }

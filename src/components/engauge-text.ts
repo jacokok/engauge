@@ -1,49 +1,60 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+import { html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators.js";
+import { styleMap } from "lit-html/directives/style-map.js";
 
 @customElement("engauge-text")
 export class EngaugeText extends LitElement {
   @property() public primaryInfo?: string;
+  @property() public primaryFontSize?: number = 28;
   @property() public secondaryInfo?: string;
+  @property() public secondaryFontSize?: number = 16;
   @property() public unit?: string;
+  @property() public unitFontSize?: number = 18;
+  @property() public horizontal: boolean = false;
 
   protected render(): TemplateResult {
-    return html` <div class="text">
-      <div class="value">
+    return html` <div style=${this.allTextStyles()}>
+      <div style=${this.primaryTextStyles()}>
         ${this.primaryInfo}
-        <span class="measurement">${this.unit}</span>
+        <span style=${this.unitTextStyles()}>${this.unit}</span>
       </div>
-      <div class="name">${this.secondaryInfo}</div>
+      <div style=${this.secondaryTextStyles()}>${this.secondaryInfo}</div>
     </div>`;
   }
 
-  static get styles(): CSSResultGroup {
-    return css`
-      .value {
-        font-size: 28px;
-        margin-right: 4px;
-        margin-top: 6px;
-        color: var(--primary-text-color);
-      }
+  private primaryTextStyles() {
+    const styles = {
+      fontSize: this.primaryFontSize + "px",
+      color: "var(--primary-text-color)",
+    };
+    return styleMap(styles);
+  }
 
-      .measurement {
-        font-size: 18px;
-        color: var(--secondary-text-color);
-      }
+  private secondaryTextStyles() {
+    const styles = {
+      color: "var(--secondary-text-color)",
+      fontWeight: "500",
+      fontSize: this.secondaryFontSize + "px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+    };
+    return styleMap(styles);
+  }
 
-      .name {
-        color: var(--secondary-text-color);
-        font-weight: 500;
-        font-size: 16px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
+  private unitTextStyles() {
+    const styles = {
+      fontSize: this.unitFontSize + "px",
+      color: "var(--secondary-text-color)",
+    };
+    return styleMap(styles);
+  }
 
-      .text {
-        margin-top: 5px;
-        margin-left: 10px;
-      }
-    `;
+  private allTextStyles() {
+    const styles = {
+      marginTop: this.horizontal ? "0px" : "5px",
+      marginLeft: this.horizontal ? "10px" : "0px",
+    };
+    return styleMap(styles);
   }
 }

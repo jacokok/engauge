@@ -138,7 +138,11 @@ export class EngaugeCard extends LitElement {
       <engauge-text
         primaryInfo=${ifDefined(this._state)}
         secondaryInfo=${ifDefined(this._name)}
+        primaryFontSize=${ifDefined(this._config.primaryFontSize)}
+        secondaryFontSize=${ifDefined(this._config.secondaryFontSize)}
+        unitFontSize=${ifDefined(this._config.unitFontSize)}
         unit=${ifDefined(this._unit)}
+        horizontal=${ifDefined(this._config.horizontal)}
       >
       </engauge-text>
     `;
