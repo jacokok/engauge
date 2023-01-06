@@ -80,8 +80,7 @@ Add this custom repository in HACS and install.
 
 ## Notes
 
-- This is considered still in beta and testing. Want to get this tested and released as stable.
-- With the stable release I plan on adding editor UI to change config.
+- There is currently no editor UI to change config and no current plans on adding it.
 
 [releases-shield]: https://img.shields.io/github/v/release/jacokok/engauge.svg?style=for-the-badge
 [releases]: https://github.com/jacokok/engauge/releases
