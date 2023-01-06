@@ -39,6 +39,9 @@ Add this custom repository in HACS and install.
 | `animationDuration` | number  | **Optional** | Animation Time                                                | 0.7                             |
 | `rounded`           | boolean | **Optional** | Strike Cap Rounded                                            | true                            |
 | `hideText`          | boolean | **Optional** | Hide all text                                                 | false                           |
+| `primaryFontSize`   | number  | **Optional** | Font Size in pixels for primary text                          | 28                              |
+| `secondaryFontSize` | number  | **Optional** | Font Size in pixels for secondary text                        | 16                              |
+| `unitFontSize`      | number  | **Optional** | Font Size in pixels for unit                                  | 18                              |
 | `severity`          | map     | **Optional** | Allows setting of colors for different numbers.               |                                 |
 | `segments`          | list    | **Optional** | List of colors and start values. Segments will override this. |                                 |
 
