@@ -1,6 +1,6 @@
 {
   "name": "engauge",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "main": "dist/my-element-card.js",
   "repository": "https://github.com/jacokok/engauge",
