@@ -1,6 +1,10 @@
 resources:
   - url: http://192.168.86.211:4173/index.js
     type: module
+  - url: /local/community/lovelace-mushroom/mushroom.js
+    type: module
 views:
   - cards:
       - type: custom:engauge-card
+
+

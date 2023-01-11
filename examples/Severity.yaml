@@ -1,8 +1,10 @@
 type: custom:engauge-card
 entity: input_number.slider1
-icon: mdi:information
 name: Severity
 severity:
-  green: 0
+  disabled: 0
+  green: 23
   yellow: 40
   red: 60
+  blue: 80
+  deepPurple: 90

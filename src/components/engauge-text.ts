@@ -5,11 +5,11 @@ import { styleMap } from "lit-html/directives/style-map.js";
 @customElement("engauge-text")
 export class EngaugeText extends LitElement {
   @property() public primaryInfo?: string;
-  @property() public primaryFontSize?: number = 28;
+  @property() public primaryFontSize?: number = 14;
   @property() public secondaryInfo?: string;
-  @property() public secondaryFontSize?: number = 16;
+  @property() public secondaryFontSize?: number = 12;
   @property() public unit?: string;
-  @property() public unitFontSize?: number = 18;
+  @property() public unitFontSize?: number = 12;
   @property() public horizontal: boolean = false;
 
   protected render(): TemplateResult {
@@ -26,6 +26,7 @@ export class EngaugeText extends LitElement {
     const styles = {
       fontSize: this.primaryFontSize + "px",
       color: "var(--primary-text-color)",
+      fontWeight: "700",
     };
     return styleMap(styles);
   }
@@ -33,7 +34,7 @@ export class EngaugeText extends LitElement {
   private secondaryTextStyles() {
     const styles = {
       color: "var(--secondary-text-color)",
-      fontWeight: "500",
+      fontWeight: "700",
       fontSize: this.secondaryFontSize + "px",
       overflow: "hidden",
       whiteSpace: "nowrap",

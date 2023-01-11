@@ -1,6 +1,6 @@
 {
   "name": "engauge",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
   "main": "dist/my-element-card.js",
   "repository": "https://github.com/jacokok/engauge",
@@ -14,7 +14,7 @@
     "build": "tsc && vite build",
     "watch": "vite build --mode development --watch",
     "preview": "vite build --mode development --watch & vite preview --host",
-    "ha": "docker run --rm -p 8123:8123 -v ${PWD}/.hass_dev:/config:Z homeassistant/home-assistant:latest",
+    "ha": "docker run --rm -p 8123:8123 -v ${PWD}/config:/config:Z homeassistant/home-assistant:latest",
     "lint": "eslint .",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --check .",

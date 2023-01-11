@@ -1,8 +1,7 @@
 type: custom:engauge-card
 entity: input_number.slider1
-horizontal: true
 name: Small + StartAngle
-size: 60
-startAngle: 180
-icon: none
+horizontal: true
+backgroundRadius: 50
 unit: Unit
+startAngle: 90

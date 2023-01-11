@@ -29,10 +29,29 @@ export interface EngaugeConfig {
   segments?: Array<Segment>;
 }
 
-interface Severity {
-  green: number;
-  yellow: number;
-  red: number;
+export interface Severity {
+  red?: number;
+  pink?: number;
+  purple?: number;
+  "deep-purple"?: number;
+  indigo?: number;
+  blue?: number;
+  "light-blue"?: number;
+  cyan?: number;
+  teal?: number;
+  green?: number;
+  "light-green"?: number;
+  lime?: number;
+  yellow?: number;
+  amber?: number;
+  orange?: number;
+  "deep-orange"?: number;
+  brown?: number;
+  grey?: number;
+  "blue-grey"?: number;
+  black?: number;
+  white?: number;
+  disabled?: number;
 }
 
 export interface Segment {

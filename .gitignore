@@ -25,6 +25,6 @@ dist-ssr
 *.sln
 *.sw?
 
-/.hass_dev/*
-!.hass_dev/configuration.yaml
-!.hass_dev/ui-lovelace.yaml
+/config/*
+!config/configuration.yaml
+!config/ui-lovelace.yaml
