@@ -1,0 +1,10 @@
+type: custom:engauge-card
+entity: input_number.slider1
+horizontal: true
+name: Big + Horizontal
+size: 100
+unit: Unit
+iconSize: 35
+primaryFontSize: 22
+secondaryFontSize: 14
+unitFontSize: 18

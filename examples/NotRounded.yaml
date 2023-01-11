@@ -2,3 +2,6 @@ type: custom:engauge-card
 entity: input_number.slider1
 rounded: false
 name: Not Rounded
+valueWidth: 10
+dialWidth: 10
+backgroundRadius: 45

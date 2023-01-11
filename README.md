@@ -4,7 +4,7 @@
 [![License][license-shield]](LICENSE)
 [![Build][build-shield]][build]
 
-Enguage is a circular gauge with icon card. The goal is to be a (almost) hot replacement for the build in gauge but with extra options and an icon.
+Enguage is a circular gauge with icon card. The goal is to be an (almost) hot replacement for the build in gauge while also having a mushroom look and feel.
 
 ## Installation
 
@@ -12,7 +12,7 @@ Add this custom repository in HACS and install.
 
 ### Preview
 
-![preview](images/preview.png)
+![preview](examples/preview.png)
 
 ## Options
 
@@ -25,7 +25,7 @@ Add this custom repository in HACS and install.
 | `unit`              | string  | **Optional** | The unit of measure                                           | From Entity                     |
 | `icon`              | string  | **Optional** | mdi:icon                                                      | From Entity                     |
 | `iconColor`         | string  | **Optional** | Icon color. Severity or segment will override this            |                                 |
-| `iconSize`          | number  | **Optional** | Icon size                                                     | 35                              |
+| `iconSize`          | number  | **Optional** | Icon size                                                     | 20                              |
 | `min`               | number  | **Optional** | Minimum gauge value                                           | 0                               |
 | `max`               | number  | **Optional** | Maximum gauge value                                           | 100                             |
 | `size`              | number  | **Optional** | Size of gauge                                                 | 100                             |
@@ -50,7 +50,7 @@ Add this custom repository in HACS and install.
 | Name         | Type   | Requirement  | Description                                |
 | ------------ | ------ | ------------ | ------------------------------------------ |
 | `green`      | number | **Optional** | Value from which to start green color      |
-| `yellow`     | number | **Optional** | Value from which to start yellow color     |
+| `yellow`     | number | **Optional** | Value from which to start yellow color     | rgba(0,0,0,0) |
 | `red`        | number | **Optional** | Value from which to start red color        |
 | `pink`       | number | **Optional** | Value from which to start pink color       |
 | `purple`     | number | **Optional** | Value from which to start purple color     |
@@ -85,9 +85,9 @@ Add this custom repository in HACS and install.
 
 ## Examples
 
-![preview](examples/example.gif)
+![previewGif](examples/example.gif)
 
-- [Default With Icon](examples/DefaultWithIcon.yaml)
+- [Default](examples/Default.yaml)
 - [Horizontal Battery](examples/HorizontalBattery.yaml)
 - [No Background](examples/NoBackground.yaml)
 - [Not Rounded](examples/NotRounded.yaml)
@@ -95,7 +95,7 @@ Add this custom repository in HACS and install.
 - [Severity](examples/Severity.yaml)
 - [Small Start Angle](examples/SmallStartAngle.yaml)
 - [Value Width](examples/ValueWidth.yaml)
-- [Width](examples/Width.yaml)
+- [No Dial](examples/NoDial.yaml)
 
 ## Notes
 

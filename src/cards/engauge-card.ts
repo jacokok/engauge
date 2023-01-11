@@ -112,11 +112,17 @@ export class EngaugeCard extends LitElement {
   }
 
   private setSegmentColors(segment: Segment) {
-    this._dialColor = segment.dialColor ?? this._dialColor;
-    this._valueColor = segment.valueColor ?? this._valueColor;
-    this._backgroundColor = segment.backgroundColor ?? this._backgroundColor;
+    this._dialColor =
+      segment.dialColor ?? this._dialColor ?? "var(--engauge-disabled-b)";
+    this._valueColor =
+      segment.valueColor ?? this._valueColor ?? "var(--engauge-disabled)";
+    this._backgroundColor =
+      segment.backgroundColor ??
+      this._backgroundColor ??
+      "var(--engauge-disabled-b)";
     this._icon = segment.icon ?? this._icon;
-    this._iconColor = segment.iconColor ?? this._iconColor;
+    this._iconColor =
+      segment.iconColor ?? this._iconColor ?? "var(--engauge-disabled)";
   }
 
   render() {
