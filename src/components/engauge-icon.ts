@@ -1,11 +1,12 @@
 import { html, LitElement, TemplateResult } from "lit";
 import { property, customElement } from "lit/decorators.js";
+import { colors } from "../colors";
 
 @customElement("engauge-icon")
 export class EngaugeIcon extends LitElement {
   @property() public icon: string = "mdi:information";
-  @property() public color: string = "var(--primary-color)";
-  @property() public size: number = 35;
+  @property() public color: string = colors.blue.color;
+  @property() public size: number = 20;
   @property() public disabled: boolean = false;
 
   protected render(): TemplateResult {

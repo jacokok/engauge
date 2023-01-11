@@ -1,18 +1,19 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
 import { property, customElement, query } from "lit/decorators.js";
 import { styleMap } from "lit-html/directives/style-map.js";
+import { colors } from "../colors";
 
 @customElement("engauge-gauge")
 export class EngaugeGauge extends LitElement {
   @property() public value: number = 0;
-  @property() public size: number = 100;
-  @property() public dialWidth?: number = 12;
-  @property() public valueWidth?: number = 12;
+  @property() public size: number = 50;
+  @property() public dialWidth?: number = 5;
+  @property() public valueWidth?: number = 5;
   @property() public min: number = 0;
   @property() public max: number = 100;
-  @property() public dialColor: string = "var(--primary-background-color)";
-  @property() public valueColor: string = "var(--primary-color)";
-  @property() public backgroundColor: string = "none";
+  @property() public dialColor: string = colors.blue.background;
+  @property() public valueColor: string = colors.blue.color;
+  @property() public backgroundColor: string = colors.blue.background;
   @property() public backgroundRadius: number = 40;
   @property() public startAngle: number = 270;
   @property() public animationDuration: number = 0.7;

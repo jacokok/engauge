@@ -39,19 +39,38 @@ Add this custom repository in HACS and install.
 | `animationDuration` | number  | **Optional** | Animation Time                                                | 0.7                             |
 | `rounded`           | boolean | **Optional** | Strike Cap Rounded                                            | true                            |
 | `hideText`          | boolean | **Optional** | Hide all text                                                 | false                           |
-| `primaryFontSize`   | number  | **Optional** | Font Size in pixels for primary text                          | 28                              |
-| `secondaryFontSize` | number  | **Optional** | Font Size in pixels for secondary text                        | 16                              |
-| `unitFontSize`      | number  | **Optional** | Font Size in pixels for unit                                  | 18                              |
+| `primaryFontSize`   | number  | **Optional** | Font Size in pixels for primary text                          | 14                              |
+| `secondaryFontSize` | number  | **Optional** | Font Size in pixels for secondary text                        | 12                              |
+| `unitFontSize`      | number  | **Optional** | Font Size in pixels for unit                                  | 12                              |
 | `severity`          | map     | **Optional** | Allows setting of colors for different numbers.               |                                 |
 | `segments`          | list    | **Optional** | List of colors and start values. Segments will override this. |                                 |
 
 ### Severity
 
-| Name     | Type   | Requirement  | Description                            |
-| -------- | ------ | ------------ | -------------------------------------- |
-| `green`  | number | **Required** | Value from which to start green color  |
-| `yellow` | number | **Required** | Value from which to start yellow color |
-| `red`    | number | **Required** | Value from which to start red color    |
+| Name         | Type   | Requirement  | Description                                |
+| ------------ | ------ | ------------ | ------------------------------------------ |
+| `green`      | number | **Optional** | Value from which to start green color      |
+| `yellow`     | number | **Optional** | Value from which to start yellow color     |
+| `red`        | number | **Optional** | Value from which to start red color        |
+| `pink`       | number | **Optional** | Value from which to start pink color       |
+| `purple`     | number | **Optional** | Value from which to start purple color     |
+| `deepPurple` | number | **Optional** | Value from which to start deepPurple color |
+| `indigo`     | number | **Optional** | Value from which to start indigo color     |
+| `blue`       | number | **Optional** | Value from which to start blue color       |
+| `lightBlue`  | number | **Optional** | Value from which to start lightBlue color  |
+| `cyan`       | number | **Optional** | Value from which to start cyan color       |
+| `teal`       | number | **Optional** | Value from which to start teal color       |
+| `lightGreen` | number | **Optional** | Value from which to start lightGreen color |
+| `lime`       | number | **Optional** | Value from which to start lime color       |
+| `amber`      | number | **Optional** | Value from which to start amber color      |
+| `orange`     | number | **Optional** | Value from which to start orange color     |
+| `deepOrange` | number | **Optional** | Value from which to start deepOrange color |
+| `brown`      | number | **Optional** | Value from which to start brown color      |
+| `grey`       | number | **Optional** | Value from which to start grey color       |
+| `blueGrey`   | number | **Optional** | Value from which to start blueGrey color   |
+| `black`      | number | **Optional** | Value from which to start black color      |
+| `white`      | number | **Optional** | Value from which to start white color      |
+| `disabled`   | number | **Optional** | Value from which to start disabled color   |
 
 ### Segments
 
